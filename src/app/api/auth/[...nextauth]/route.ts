@@ -8,6 +8,10 @@ const authOptions = {
       clientSecret: process.env.AUTH_KAKAO_SECRET!,
     }),
   ],
+  pages: {
+    signIn: "/login",
+    signOut: "/login"
+  },
 };
 
 const handler = NextAuth(authOptions);
