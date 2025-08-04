@@ -55,7 +55,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="h-screen flex flex-col justify-between pt-12">
+    <div className="mx-8 h-screen flex flex-col justify-between pt-12">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={step}
@@ -75,12 +75,12 @@ export default function Page() {
           {step === 6 && <StepEnd />}
         </motion.div>
       </AnimatePresence>
-      <button
-        className="fixed bottom-14 w-full left-0 right-0 mx-auto max-w-[402px] h-[46px] bg-[#FFFBC0] rounded-3xl text-[#000414] font-bold cursor-pointer"
-        onClick={goNext}
-      >
-        {getTextByStep()}
-      </button>
+
+      <div className="w-full max-w-[402px] mx-auto mb-14">
+        <button className="w-full h-[46px] bg-[#FFFBC0] rounded-3xl text-[#000414] font-bold" onClick={goNext}>
+          {getTextByStep()}
+        </button>
+      </div>
     </div>
   );
 }
