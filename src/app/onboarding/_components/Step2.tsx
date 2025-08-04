@@ -5,8 +5,8 @@ import { useStepFormStore } from "@/store/useStepFormStore";
 import { useState } from "react";
 
 export default function Step2() {
-  const { setData } = useStepFormStore();
-  const [checked, setChecked] = useState<Step2CategoryType | undefined>(undefined);
+  const { setData, data } = useStepFormStore();
+  const [checked, setChecked] = useState<Step2CategoryType | undefined>(data.step2 as Step2CategoryType);
 
   const handleClick = (value: Step2CategoryType) => {
     setChecked(value);
