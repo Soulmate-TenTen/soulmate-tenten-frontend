@@ -27,7 +27,7 @@ export default function LoginPage() {
         <div className="relative z-10">
           <button 
             onClick={() => signIn("kakao", { callbackUrl: callbackUrl || "/" })}
-            className="w-[338px] h-[46px] bg-[#FFEC45] mt-[43px] hover:bg-[#FFE600] text-[#3C1E1E] font-extrabold rounded-[30px] transition-colors duration-200 flex items-center justify-center shadow-lg"
+            className="w-[338px] h-[46px] bg-[#FFEC45] mt-[43px] hover:bg-[#FFE600] text-[#3C1E1E] font-extrabold rounded-[30px] transition-colors duration-200 flex items-center justify-center shadow-lg cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <Image 
@@ -37,7 +37,7 @@ export default function LoginPage() {
                 height={16}
                 className="w-4 h-4"
               />
-              <span className="text-base font-extrabold font-suit cursor-pointer">카카오로 시작하기</span>
+              <span className="text-base font-extrabold font-suit">카카오로 시작하기</span>
             </div>
           </button>
         </div>
