@@ -5,7 +5,7 @@ export default function StepStart() {
   const { data: session } = useSession();
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 flex flex-col h-screen">
       {/* 커스텀 애니메이션 정의 */}
       <style>
         {`
@@ -15,10 +15,11 @@ export default function StepStart() {
           }
         `}
       </style>
+
       {/* 로고 */}
       <Image className="mb-23" src="/logo.svg" width={80} height={10.34} alt="소울메이트 로고" />
 
-      <div className="flex flex-col justify-between h-[100%]">
+      <div className="flex flex-col justify-between flex-1">
         {/* 텍스트 */}
         <div className="font-bold">
           <p className="text-[26px] mb-3">
@@ -33,10 +34,10 @@ export default function StepStart() {
           <Image src="/onboarding-chat-1.svg" width={208} height={53} alt="저와 함께 시작해볼까요?" />
           <Image className="[animation:float_3s_ease-in-out_infinite]" src="/onboarding-char-1.svg" width={117} height={105} alt="캐릭터" />
         </div>
-      </div>
 
-      {/* Spacer 아래 버튼 영역 고려 시 약간의 여백 */}
-      <div className="h-[80px]" />
+        {/* Spacer 아래 버튼 영역 고려 시 약간의 여백 */}
+        <div className="h-[80px]" />
+      </div>
     </div>
   );
 }
