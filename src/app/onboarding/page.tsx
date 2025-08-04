@@ -1,6 +1,5 @@
 "use client";
 
-import { useStepFormStore } from "@/store/useStepFormStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import StepStart from "./_components/StepStart";
@@ -10,10 +9,27 @@ import Step3 from "./_components/Step3";
 import Step4 from "./_components/Step4";
 import Step5 from "./_components/Step5";
 import StepEnd from "./_components/StepEnd";
+import { AnimatePresence, motion } from "framer-motion";
+import { useStepFormStore } from "@/store/useStepFormStore";
+
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+    opacity: 0,
+  }),
+};
 
 export default function Page() {
   const router = useRouter();
-  const { step, goNext } = useStepFormStore();
+  const { step, direction, goNext } = useStepFormStore();
 
   const getTextByStep = () => {
     if (step === 0) return "시작하기";
@@ -28,16 +44,37 @@ export default function Page() {
     }
   }, [step]);
 
+  const stepComponents = [
+    <StepStart key="step-start" />,
+    <Step1 key="step1" />,
+    <Step2 key="step2" />,
+    <Step3 key="step3" />,
+    <Step4 key="step4" />,
+    <Step5 key="step5" />,
+    <StepEnd key="step-end" />,
+  ];
+
   return (
     <div className="h-screen flex flex-col justify-between pt-12">
-      {step === 0 && <StepStart />}
-      {step === 1 && <Step1 />}
-      {step === 2 && <Step2 />}
-      {step === 3 && <Step3 />}
-      {step === 4 && <Step4 />}
-      {step === 5 && <Step5 />}
-      {step === 6 && <StepEnd />}
-
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div
+          key={step}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            type: "tween",
+            ease: "easeInOut",
+            duration: 0.3,
+          }}
+          className="inset-0 w-full h-full overflow-hidden"
+        >
+          {stepComponents[step]}
+          {step === 6 && <StepEnd />}
+        </motion.div>
+      </AnimatePresence>
       <button
         className="fixed bottom-14 w-full left-0 right-0 mx-auto max-w-[402px] h-[46px] bg-[#FFFBC0] rounded-3xl text-[#000414] font-bold cursor-pointer"
         onClick={goNext}
