@@ -40,6 +40,7 @@ export const useStepFormStore = create<StepFormState & StepFormAction>()(
         "step3",
         "step4",
         "step5",
+        null,
       ];
 
       const currentKey = requiredFields[step];

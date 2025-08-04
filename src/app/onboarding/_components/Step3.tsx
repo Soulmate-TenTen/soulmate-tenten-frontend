@@ -10,7 +10,7 @@ export default function Step3() {
 
   const handleClick = (value: Step3CategoryType) => {
     setChecked(value);
-    setData("step3", checked as Step3CategoryType);
+    setData("step3", value as Step3CategoryType);
   };
 
   return (

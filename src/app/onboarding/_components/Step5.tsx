@@ -10,7 +10,7 @@ export default function Step5() {
 
   const handleClick = (value: Step5CategoryType) => {
     setChecked(value);
-    setData("step2", checked as Step5CategoryType);
+    setData("step5", value as Step5CategoryType);
   };
 
   return (
