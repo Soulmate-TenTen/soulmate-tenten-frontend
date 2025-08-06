@@ -29,7 +29,7 @@ export default function ChatInput() {
     }, [input]);
 
     return (
-        <div className="bg-[#27272A] rounded-tl-[12px] rounded-tr-[12px] h-[111px] flex items-center justify-between px-8 gap-2">
+        <div className="bg-[#27272A] rounded-tl-[12px] rounded-tr-[12px] h-[111px] flex items-center px-8 gap-2">
             <div className="flex-1 bg-white rounded-[29px] p-2 relative overflow-hidden">
                 <textarea
                     ref={textareaRef}
