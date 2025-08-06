@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -19,6 +20,7 @@ export default function HomePage() {
             로그아웃
           </button>
         </div>
+        <Footer />
     </div>
   );
 }
