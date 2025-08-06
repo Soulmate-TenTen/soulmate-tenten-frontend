@@ -4,6 +4,9 @@ export { default } from "next-auth/middleware"
 export const config = {
   matcher: [
     "/",
-    "/onboarding"
+    "/onboarding",
+    "/chat",
+    "/diary",
+    "/mypage"
   ],
 }; 

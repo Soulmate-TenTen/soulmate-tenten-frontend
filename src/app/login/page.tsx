@@ -11,7 +11,7 @@ export default function LoginPage() {
     <div className="relative min-h-screen bg-[#000414] flex flex-col items-center justify-center overflow-hidden">
       <div className="flex flex-col items-center justify-center flex-1 px-8">
         <div className="mb-12">
-          <Image src={title} alt="소울메이트 로고" />
+          <Image src={title} alt="소울메이트 로고"/>
         </div>
         <div className="text-center mb-16 px-4">
           <p className="text-[#FFFFF6] text-base leading-relaxed font-suit font-bold">
