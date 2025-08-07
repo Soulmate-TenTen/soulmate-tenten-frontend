@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
   const router = useRouter();
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 w-full bg-[#000414] border-t border-[#252525] rounded-t-xl z-50">
+    <footer className="sticky bottom-0 w-full bg-[#000414] border-t border-[#252525] rounded-t-xl z-50">
       <div className="max-w-md mx-auto px-8 py-4">
         <div className="flex justify-around items-center">
           {/* 홈 버튼 */}
