@@ -5,5 +5,8 @@ export type ApiResponse<T> = {
 };
 
 export const http = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: '/',
+  headers: {
+    'x-api-route': 'true', /* next-auth랑 API 라우트 경로 충돌 방지 */
+  },
 });
