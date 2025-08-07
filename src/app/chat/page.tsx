@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getTodayDate } from "@/lib/utils";
@@ -14,9 +14,13 @@ enum Mode {
 }
 
 export default function ChatPage() {
-  const { messages } = useChatStore();
+  const { messages, clearMessages } = useChatStore();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [mode] = useState(Mode.CHAT);
+
+  useEffect(() => {
+    clearMessages();
+  }, []);
 
   useScrollToBottom(scrollRef, messages);
 
