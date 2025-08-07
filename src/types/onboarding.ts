@@ -39,3 +39,12 @@ export const Step2CategoryList: Step2Category[] = Object.values(Step2Category);
 export const Step3CategoryList: Step3Category[] = Object.values(Step3Category);
 export const Step4CategoryList: Step4Category[] = Object.values(Step4Category);
 export const Step5CategoryList: Step5Category[] = Object.values(Step5Category);
+
+export interface OnboardingData {
+  memberId?: string;
+  valueAttribute: Step1CategoryType;
+  decision: Step2CategoryType;
+  regret: Step3CategoryType;
+  decisionTrust: Step4CategoryType;
+  soulmateType: "T" | "F";
+}
