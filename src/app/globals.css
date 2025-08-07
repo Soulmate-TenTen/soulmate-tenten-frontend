@@ -43,3 +43,36 @@ body {
   color: var(--foreground);
   font-family: 'SUIT', Arial, Helvetica, sans-serif;
 }
+
+/* Markdown 리스트 스타일 강제 적용 */
+.markdown-body ul,
+.markdown-body ol {
+  list-style: disc outside none !important;
+  margin: 0.5em 0 !important;
+  padding-left: 2em !important;
+}
+
+.markdown-body ol {
+  list-style: decimal outside none !important;
+}
+
+.markdown-body li {
+  margin: 0.25em 0 !important;
+}
+
+/* 개행 처리 */
+.markdown-body p {
+  margin: 0.5em 0 !important;
+  white-space: pre-wrap !important;
+}
+
+.markdown-body br {
+  display: block !important;
+  content: "" !important;
+  margin: 0.25em 0 !important;
+}
+
+/* 빈 줄 처리 */
+.markdown-body p:empty {
+  min-height: 1em !important;
+}
