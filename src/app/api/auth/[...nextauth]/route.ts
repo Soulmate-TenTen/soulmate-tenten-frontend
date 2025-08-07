@@ -28,6 +28,7 @@ const authOptions = {
       if (response.ok) {
         const data = await response.json();
         user.newMemberYn = data.newMemberYn;
+        user.id = data.memberId;
       }
       return true;
     },
@@ -45,12 +46,14 @@ const authOptions = {
     async session({ session, token }: { session: Session, token: JWT }) {
       if (token.newMemberYn) {
         session.user.newMemberYn = token.newMemberYn;
+        session.user.id = token.id;
       }
       return session;
     },
     async jwt({ token, user }: { token: JWT, user: User }) {
       if (user?.newMemberYn) {
         token.newMemberYn = user.newMemberYn;
+        token.id = user.id;
       }
       return token;
     }
