@@ -12,8 +12,8 @@ enum Mode {
 }
 
 export default function ChatPage() {
-    const [mode, setMode] = useState(Mode.CHAT);
-    const [messages, setMessages] = useState([
+    const [mode] = useState(Mode.CHAT);
+    const [messages] = useState([
         {
             content: "반가워요! 결정하지 못한 일이 머릿속을 맴돌고 있다면, 저와 함께 천천히 정리해볼까요?",
             role: "assistant"

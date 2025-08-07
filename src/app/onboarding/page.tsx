@@ -11,6 +11,9 @@ import Step5 from "./_components/Step5";
 import StepEnd from "./_components/StepEnd";
 import { AnimatePresence, motion } from "framer-motion";
 import { useStepFormStore } from "@/store/useStepFormStore";
+import { saveOnboarding } from "./api";
+import { useSession } from "next-auth/react";
+import { OnboardingData, Step1CategoryType, Step2CategoryType, Step3CategoryType, Step4CategoryType } from "@/types/onboarding";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -29,7 +32,8 @@ const slideVariants = {
 
 export default function Page() {
   const router = useRouter();
-  const { step, direction, goNext } = useStepFormStore();
+  const { data: session } = useSession();
+  const { step, direction, goNext, data } = useStepFormStore();
 
   const getTextByStep = () => {
     if (step === 0) return "시작하기";
@@ -40,9 +44,19 @@ export default function Page() {
 
   useEffect(() => {
     if (step === 7) {
-      router.push("/home");
+      const transformedData: OnboardingData = {
+        memberId: session?.user?.id,
+        valueAttribute: data.step1 as Step1CategoryType,
+        decision: data.step2 as Step2CategoryType,
+        regret: data.step3 as Step3CategoryType,
+        decisionTrust: data.step4 as Step4CategoryType,
+        soulmateType: data.step5 === "이성을 기반으로 해결책을 제시" ? "T" : "F"
+      };
+      
+      saveOnboarding(transformedData);
+      router.push("/");
     }
-  }, [step]);
+  }, [step, data.step1, data.step2, data.step3, data.step4, data.step5, router, session?.user?.id]);
 
   const stepComponents = [
     <StepStart key="step-start" />,

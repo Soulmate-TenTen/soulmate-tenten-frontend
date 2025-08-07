@@ -6,10 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { signOut, useSession } from "next-auth/react";
 import { getCount } from "./api";
+import { useRouter } from "next/navigation";
 
 export default function MyPage() {
+  const router = useRouter();
   const { data: session } = useSession();
-
   const [count, setCount] = useState(0);
 
   const handleLogout = () => {
@@ -53,16 +54,13 @@ export default function MyPage() {
           </div>
         </div>
         <div className="space-y-6">
-          {/* 내 가치관 및 기준 재설정 */}
-          <div className="border-b border-[#252525] pb-4 cursor-pointer">
-            <button className="text-[#FFFFF6] font-bold text-base text-left w-full">
+          <div className="border-b border-[#252525] pb-4">
+            <button onClick={() => router.push("/onboarding")} className="text-[#FFFFF6] font-bold text-base text-left w-full cursor-pointer">
               내 가치관 및 기준 재설정
             </button>
           </div>
-
-          {/* 개인정보 동의 및 이용약관 */}
-          <div className="border-b border-[#252525] pb-4 cursor-pointer">
-            <button className="text-[#FFFFF6] font-bold text-base text-left w-full">
+          <div className="border-b border-[#252525] pb-4">
+            <button className="text-[#FFFFF6] font-bold text-base text-left w-full cursor-pointer">
               개인정보 동의 및 이용약관
             </button>
           </div>
