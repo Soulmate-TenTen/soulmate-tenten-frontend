@@ -33,13 +33,12 @@ const authOptions = {
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       if (url.startsWith(baseUrl)) {
-        /*const session = await getSession();
+        const session = await getSession();
         if (session?.user?.newMemberYn === 'Y') {
           return `${baseUrl}/onboarding`;
         } else {
           return `${baseUrl}/`;
-        }*/
-        return `${baseUrl}/onboarding`;
+        }
       }
       return url;
     },
