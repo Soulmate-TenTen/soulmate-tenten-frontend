@@ -1,9 +1,10 @@
 "use client";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Message from "./_components/Message";
 import { getTodayDate } from "@/lib/utils";
-import { useState } from "react";
+import { useChatStore } from "@/store/useChatStore";
+import Message from "./_components/Message";
 import ChatInput from "./_components/Input";
 
 enum Mode {
@@ -12,13 +13,8 @@ enum Mode {
 }
 
 export default function ChatPage() {
-    const [mode] = useState(Mode.CHAT);
-    const [messages] = useState([
-        {
-            content: "반가워요! 결정하지 못한 일이 머릿속을 맴돌고 있다면, 저와 함께 천천히 정리해볼까요?",
-            role: "assistant"
-        }
-    ]);
+  const [mode] = useState(Mode.CHAT);
+  const { messages } = useChatStore();
 
   return (
     <div className="flex flex-col h-screen bg-[#000414]">
@@ -29,8 +25,9 @@ export default function ChatPage() {
         {messages.map((message, index) => (
           <Message
             key={index}
-            content={message.content}
+            content={[{ type: 'text', text: message.content[0].text }]}
             role={message.role}
+            isLastMessage={index === messages.length - 1}
           />
         ))}
       </div>

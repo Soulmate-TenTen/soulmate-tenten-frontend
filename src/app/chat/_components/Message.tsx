@@ -1,16 +1,16 @@
 import React from 'react';
 import Image from 'next/image';
 import characterSvg from '@/assets/images/character.svg';
+import { useChatStore } from '@/store/useChatStore';
+import { ChatMessage } from '../type';
 
-interface MessageProps {
-  content: string;
-  role: string;
-}
-
-const Message: React.FC<MessageProps> = ({ 
+const Message: React.FC<ChatMessage> = ({ 
   content, 
   role,
+  isLastMessage,
 }) => {
+  const { isLoading } = useChatStore();
+
   return (
     <div className={`flex ${role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
       <div className="max-w-[270px] relative">
@@ -41,7 +41,7 @@ const Message: React.FC<MessageProps> = ({
             padding: role === 'user' ? '13px 23px' : '12px 16px'
           }}
         >
-          {content}
+          {isLastMessage && isLoading ? '답변 생성중...' : content[0].text}
         </div>
       </div>
     </div>
