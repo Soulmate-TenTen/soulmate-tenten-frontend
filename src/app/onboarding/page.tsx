@@ -11,6 +11,8 @@ import Step5 from "./_components/Step5";
 import StepEnd from "./_components/StepEnd";
 import { AnimatePresence, motion } from "framer-motion";
 import { useStepFormStore } from "@/store/useStepFormStore";
+import { saveOnboarding } from "./api";
+import { useSession } from "next-auth/react";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -29,7 +31,8 @@ const slideVariants = {
 
 export default function Page() {
   const router = useRouter();
-  const { step, direction, goNext } = useStepFormStore();
+  const { data: session } = useSession();
+  const { step, direction, goNext, data } = useStepFormStore();
 
   const getTextByStep = () => {
     if (step === 0) return "시작하기";
@@ -40,7 +43,17 @@ export default function Page() {
 
   useEffect(() => {
     if (step === 7) {
-      router.push("/home");
+      const transformedData = {
+        memberId: session?.user?.id,
+        valueAttribute: data.step1,
+        decision: data.step2,
+        regret: data.step3,
+        decisionTrust: data.step4,
+        soulmateType: data.step5 === "이성을 기반으로 해결책을 제시" ? "T" : "F"
+      };
+      
+      saveOnboarding(transformedData);
+      router.push("/");
     }
   }, [step]);
 
