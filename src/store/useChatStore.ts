@@ -1,6 +1,11 @@
 import { create } from 'zustand';
 import { ChatMessage } from '@/app/chat/type';
 
+const INITIAL_MESSAGE: ChatMessage = {
+  role: 'assistant',
+  content: [{ type: 'text', text: '반가워요! 결정하지 못한 일이 머릿속을 맴돌고 있다면, 저와 함께 천천히 정리해볼까요?' }]
+};
+
 interface ChatStore {
   messages: ChatMessage[];
   isLoading: boolean;
@@ -12,12 +17,7 @@ interface ChatStore {
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
-  messages: [
-    {
-      role: 'assistant',
-      content: [{ type: 'text', text: '반가워요! 결정하지 못한 일이 머릿속을 맴돌고 있다면, 저와 함께 천천히 정리해볼까요?' }]
-    }
-  ],
+  messages: [INITIAL_MESSAGE],
   isLoading: false,
   setMessages: (messages) => set({ messages }),
   addMessage: (message) => set((state) => ({
@@ -51,5 +51,5 @@ export const useChatStore = create<ChatStore>((set) => ({
   
   setIsLoading: (loading) => set({ isLoading: loading }),
   
-  clearMessages: () => set({ messages: [] }),
+  clearMessages: () => set({ messages: [INITIAL_MESSAGE] }),
 }));

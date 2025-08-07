@@ -8,16 +8,21 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /* 채팅 호출 함수 */
 export async function invoke(message: string): Promise<void> {
-  const { addMessage } = useChatStore.getState();
-  addMessage({
+  const { addMessage, messages } = useChatStore.getState();
+  
+  const userMessage: ChatMessage = {
     role: 'user',
     content: [{ type: 'text', text: message }]
-  });
+  };
+  addMessage(userMessage);
+  
+  const allMessages = [
+    ...messages,
+    userMessage
+  ];
+  
   stream({
-    messages: [{
-      role: 'user',
-      content: [{ type: 'text', text: message }]
-    }]
+    messages: allMessages
   });
 }
 
