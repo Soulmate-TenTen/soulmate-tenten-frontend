@@ -25,7 +25,7 @@ export default function ChatPage() {
       <Header title={getTodayDate()} />
       
       {/* 채팅 메시지 영역 */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4" ref={scrollRef}>
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 chat-scroll-area" ref={scrollRef}>
         {messages.map((message, index) => (
           <Message
             key={index}

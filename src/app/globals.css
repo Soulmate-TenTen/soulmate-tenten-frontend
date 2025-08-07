@@ -44,6 +44,59 @@ body {
   font-family: 'SUIT', Arial, Helvetica, sans-serif;
 }
 
+/* 커스텀 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 246, 0.2);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 246, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 246, 0.6);
+}
+
+/* Firefox 스크롤바 스타일 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 246, 0.2) transparent;
+}
+
+/* 채팅 영역 스크롤바 특별 스타일 */
+.chat-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 246, 0.15);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 246, 0.3);
+  width: 6px;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 246, 0.5);
+}
+
 /* Markdown 리스트 스타일 강제 적용 */
 .markdown-body ul,
 .markdown-body ol {
