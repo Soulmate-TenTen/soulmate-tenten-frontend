@@ -28,30 +28,32 @@ const authOptions = {
       if (response.ok) {
         const data = await response.json();
         user.newMemberYn = data.newMemberYn;
+        user.id = data.memberId;
       }
       return true;
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       if (url.startsWith(baseUrl)) {
-        /*const session = await getSession();
+        const session = await getSession();
         if (session?.user?.newMemberYn === 'Y') {
           return `${baseUrl}/onboarding`;
         } else {
           return `${baseUrl}/`;
-        }*/
-        return `${baseUrl}/onboarding`;
+        }
       }
       return url;
     },
     async session({ session, token }: { session: Session, token: JWT }) {
       if (token.newMemberYn) {
         session.user.newMemberYn = token.newMemberYn;
+        session.user.id = token.id;
       }
       return session;
     },
     async jwt({ token, user }: { token: JWT, user: User }) {
       if (user?.newMemberYn) {
         token.newMemberYn = user.newMemberYn;
+        token.id = user.id;
       }
       return token;
     }
