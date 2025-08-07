@@ -21,7 +21,7 @@ export default function ChatInput() {
         setInput("");
     };
 
-    useResizeInput(textareaRef as React.RefObject<HTMLTextAreaElement>, input);
+    useResizeInput(textareaRef, input);
 
     return (
         <div className="bg-[#27272A] rounded-tl-[12px] rounded-tr-[12px] h-[111px] flex items-center px-8 gap-2">

@@ -23,7 +23,7 @@ export async function invoke(message: string): Promise<void> {
 
 /* 입력창 크기 조절 훅 */
 export function useResizeInput(
-  textareaRef: React.RefObject<HTMLTextAreaElement>,
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>,
   input: string
 ): void {
   useEffect(() => {
@@ -99,4 +99,16 @@ export async function stream(data: ChatRequest): Promise<void> {
       setIsLoading(false);
     },
   });
+}
+
+/* 스크롤 훅 */
+export function useScrollToBottom(
+  scrollRef: React.RefObject<HTMLDivElement | null>,
+  messages: ChatMessage[]
+): void {
+  useEffect(() => {
+    const containerElement = scrollRef.current;
+    if (!containerElement) return;
+    containerElement.scrollTop = containerElement.scrollHeight;
+  }, [messages]);
 }
