@@ -11,7 +11,7 @@ interface ChatStore {
   clearMessages: () => void;
 }
 
-export const useChatStore = create<ChatStore>((set, get) => ({
+export const useChatStore = create<ChatStore>((set) => ({
   messages: [
     {
       role: 'assistant',

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { ChatRequest } from './type';
+import { ChatRequest, ChatMessage } from './type';
 import { useChatStore } from '../../store/useChatStore';
 
 /* 스트리밍 속도 조절을 위한 유틸리티 함수 */
@@ -41,7 +41,7 @@ export function useResizeInput(
           textareaRef.current.style.overflowY = 'hidden';
       }
     }
-  }, [input]);
+  }, [input, textareaRef]);
 }
 
 /* 스트리밍 함수 */
@@ -52,7 +52,7 @@ export async function stream(data: ChatRequest): Promise<void> {
 
   setIsLoading(true);
   
-  const assistantMessage: any = {
+  const assistantMessage: ChatMessage = {
     role: 'assistant',
     content: [{ type: 'text', text: '' }]
   };
