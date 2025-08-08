@@ -9,5 +9,6 @@ export default function useGetRoadList({ selectDate }: IUseGetRoadList) {
   return useQuery({
     queryFn: () => getRoadList({ selectDate }),
     queryKey: [selectDate],
+    staleTime: 0,
   });
 }

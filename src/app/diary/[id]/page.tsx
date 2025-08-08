@@ -3,11 +3,15 @@
 import useGetRoadDetail from "@/hooks/useGetRoadDetail";
 import useSaveRoad from "@/hooks/useSaveRoad";
 import { useDiaryStore } from "@/store/useDiaryStore";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useRef, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const queryClient = useQueryClient();
+
   const { id } = use(params);
   const router = useRouter();
   const [select, setSelect] = useState<null | "A" | "B">(null);
@@ -34,6 +38,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       },
       {
         onSuccess() {
+          queryClient.invalidateQueries({ queryKey: ["roadDetail", id] });
+          queryClient.invalidateQueries({ queryKey: [selectedDate] });
           goBack();
         },
       }

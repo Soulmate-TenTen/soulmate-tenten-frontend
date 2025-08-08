@@ -7,6 +7,7 @@ interface IUseGetRoadDetail {
 export default function useGetRoadDetail({ roadId }: IUseGetRoadDetail) {
   return useQuery({
     queryFn: () => getRoadDetail({ roadId }),
-    queryKey: [roadId],
+    queryKey: ["roadDetail", roadId],
+    staleTime: 0,
   });
 }
