@@ -20,7 +20,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     clearMessages();
-  }, []);
+  }, [clearMessages]);
 
   useScrollToBottom(scrollRef, messages);
 

@@ -1,4 +1,4 @@
-import NextAuth, { Session, User } from "next-auth";
+import NextAuth, { Account, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Kakao from "next-auth/providers/kakao";
 import { getSession } from "next-auth/react";
@@ -43,7 +43,7 @@ const authOptions = {
       }
       return url;
     },
-    async jwt({ token, account, user }: { token: JWT, account: any, user: User }) {
+    async jwt({ token, account, user }: { token: JWT, account: Account | null, user: User }) {
       if (account?.provider === 'kakao') {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;

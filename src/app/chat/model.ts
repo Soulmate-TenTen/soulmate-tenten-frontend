@@ -115,5 +115,5 @@ export function useScrollToBottom(
     const containerElement = scrollRef.current;
     if (!containerElement) return;
     containerElement.scrollTop = containerElement.scrollHeight;
-  }, [messages]);
+  }, [messages, scrollRef]);
 }
