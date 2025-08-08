@@ -1,4 +1,4 @@
-import { Road } from "@/types/calendar";
+import { Road } from "@/types/diary";
 import { useRouter } from "next/navigation";
 
 interface IDiaryList {
