@@ -13,6 +13,14 @@
 /* SUIT 폰트 정의(한글) */
 @font-face {
   font-family: 'SUIT';
+  src: url('/fonts/SUIT-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SUIT';
   src: url('/fonts/SUIT-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
@@ -42,4 +50,90 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'SUIT', Arial, Helvetica, sans-serif;
+}
+
+/* 커스텀 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 246, 0.2);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 246, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 246, 0.6);
+}
+
+/* Firefox 스크롤바 스타일 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 246, 0.2) transparent;
+}
+
+/* 채팅 영역 스크롤바 특별 스타일 */
+.chat-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 246, 0.15);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 246, 0.3);
+  width: 6px;
+}
+
+.chat-scroll-area::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 246, 0.5);
+}
+
+/* Markdown 리스트 스타일 강제 적용 */
+.markdown-body ul,
+.markdown-body ol {
+  list-style: disc outside none !important;
+  margin: 0.5em 0 !important;
+  padding-left: 2em !important;
+}
+
+.markdown-body ol {
+  list-style: decimal outside none !important;
+}
+
+.markdown-body li {
+  margin: 0.25em 0 !important;
+}
+
+/* 개행 처리 */
+.markdown-body p {
+  margin: 0.5em 0 !important;
+  white-space: pre-wrap !important;
+}
+
+.markdown-body br {
+  display: block !important;
+  content: "" !important;
+  margin: 0.25em 0 !important;
+}
+
+/* 빈 줄 처리 */
+.markdown-body p:empty {
+  min-height: 1em !important;
 }

@@ -1,9 +1,11 @@
 "use client";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Message from "./_components/Message";
 import { getTodayDate } from "@/lib/utils";
-import { useState } from "react";
+import { useChatStore } from "@/store/useChatStore";
+import { useScrollToBottom } from "./model";
+import Message from "./_components/Message";
 import ChatInput from "./_components/Input";
 
 enum Mode {
@@ -12,22 +14,29 @@ enum Mode {
 }
 
 export default function ChatPage() {
+  const { messages, clearMessages } = useChatStore();
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [mode] = useState(Mode.CHAT);
-  const [messages] = useState([
-    {
-      content: "반가워요! 결정하지 못한 일이 머릿속을 맴돌고 있다면, 저와 함께 천천히 정리해볼까요?",
-      role: "assistant",
-    },
-  ]);
 
+  useEffect(() => {
+    clearMessages();
+  }, []);
+
+  useScrollToBottom(scrollRef, messages);
+  
   return (
     <div className="flex flex-col h-screen">
       <Header title={getTodayDate()} />
 
       {/* 채팅 메시지 영역 */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 chat-scroll-area" ref={scrollRef}>
         {messages.map((message, index) => (
-          <Message key={index} content={message.content} role={message.role} />
+          <Message
+            key={index}
+            content={[{ type: 'text', text: message.content[0].text }]}
+            role={message.role}
+            isLastMessage={index === messages.length - 1}
+          />
         ))}
       </div>
 

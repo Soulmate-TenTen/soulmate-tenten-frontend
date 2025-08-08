@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // CLOVA Studio API 프록시 설정
+      {
+        source: '/api/clova/:path*',
+        destination: 'https://clovastudio.stream.ntruss.com/:path*',
+      },
     ];
   },
 };
