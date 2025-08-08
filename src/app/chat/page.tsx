@@ -43,7 +43,7 @@ export default function ChatPage() {
       }
 
       {/* 메시지 입력 영역 */}
-      {mode === Mode.CHAT ? <ChatInput /> : <Footer />}
+      {mode === Mode.CHAT && messages[messages.length -1].content[0].text !== "REPORT" ? <ChatInput /> : <Footer />}
     </div>
   );
 }
