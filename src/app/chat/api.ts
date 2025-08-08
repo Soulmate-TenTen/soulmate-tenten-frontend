@@ -12,6 +12,11 @@ export async function resetChatMemory(memberId: number): Promise<void> {
     await http.get(`/api/chatting/reset?memberId=${memberId}`);
 }
 
+export async function getChatHistory(roadId: number) {
+    const response = await http.get(`/api/chatting/chattingList?roadId=${roadId}`);
+    return response.data;
+}
+
 export async function getReport(roadId: number=3) {
   const response = await http.get(`/api/road/getRoadDetail?roadId=${roadId}`);
   return response.data;
