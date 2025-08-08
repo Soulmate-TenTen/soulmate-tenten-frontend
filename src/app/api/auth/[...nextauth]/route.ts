@@ -43,19 +43,28 @@ const authOptions = {
       }
       return url;
     },
-    async session({ session, token }: { session: Session, token: JWT }) {
-      if (token.newMemberYn) {
-        session.user.newMemberYn = token.newMemberYn;
-        session.user.id = token.id;
+    async jwt({ token, account, user }: { token: JWT, account: any, user: User }) {
+      if (account?.provider === 'kakao') {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
       }
-      return session;
-    },
-    async jwt({ token, user }: { token: JWT, user: User }) {
+      
       if (user?.newMemberYn) {
         token.newMemberYn = user.newMemberYn;
         token.id = user.id;
       }
       return token;
+    },
+    async session({ session, token }: { session: Session, token: JWT }) {
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      
+      if (token.newMemberYn) {
+        session.user.newMemberYn = token.newMemberYn;
+        session.user.id = token.id;
+      }
+      
+      return session;
     }
   },
 };

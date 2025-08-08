@@ -7,3 +7,20 @@ export async function getCount(): Promise<number> {
     return await http.get(`/api/road/countRoad?memberId=${session?.user?.id}`)
         .then((res) => res.data.roadCount);
 }
+
+/* 카카오 탈퇴 API */
+export async function unsubscribeKakao(): Promise<void> {
+    const session = await getSession();
+    await http.post('/api/kakao/unlink', {}, {
+        headers: {
+            'Authorization': `Bearer ${session?.accessToken}`,
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+    });
+}
+
+/* 회원 탈퇴 API */
+export async function deleteUser(): Promise<void> {
+    const session = await getSession();
+    await http.delete(`/api/member/out?memberId=${session?.user?.id}`);
+}

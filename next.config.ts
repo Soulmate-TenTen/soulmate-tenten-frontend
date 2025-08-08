@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
+        source: '/api/kakao/unlink',
+        destination: 'https://kapi.kakao.com/v1/user/unlink',
+      },
+      {
         source: '/api/:path*',
         destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
         has: [
@@ -28,7 +32,7 @@ const nextConfig: NextConfig = {
       {
         source: '/api/clova/:path*',
         destination: 'https://clovastudio.stream.ntruss.com/:path*',
-      },
+      }
     ];
   },
 };
