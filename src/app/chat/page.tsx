@@ -8,7 +8,7 @@ import Message from "./_components/Message";
 import ChatInput from "./_components/Input";
 import ReportPage from "./_components/Report";
 import { LongButton } from "@/components/buttons";
-import { useScrollToBottom, initChat } from "./model";
+import { useScrollToBottom, useInitChat } from "./model";
 import { Mode } from "./type";
 
 export default function ChatPage() {
@@ -16,7 +16,7 @@ export default function ChatPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState(Mode.CHAT);
 
-  initChat(mode);
+  useInitChat(mode);
   useScrollToBottom(scrollRef, messages);
   
   return (

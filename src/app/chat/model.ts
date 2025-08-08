@@ -104,7 +104,7 @@ export function useScrollToBottom(
   }, [messages, scrollRef]);
 }
 
-export function initChat(mode: Mode) {
+export function useInitChat(mode: Mode) {
   const { clearMessages } = useChatStore.getState();
   const { data: session } = useSession();
 
@@ -115,5 +115,5 @@ export function initChat(mode: Mode) {
         resetChatMemory(Number(session?.user?.id));
       }
     }
-  }, []);
+  }, [clearMessages, mode, session?.user?.id]);
 }
