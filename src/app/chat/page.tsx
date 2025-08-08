@@ -9,8 +9,8 @@ import Message from "./_components/Message";
 import ChatInput from "./_components/Input";
 
 enum Mode {
-    CHAT = "chat",
-    REPORT = "report"
+  CHAT = "chat",
+  REPORT = "report",
 }
 
 export default function ChatPage() {
@@ -23,11 +23,11 @@ export default function ChatPage() {
   }, []);
 
   useScrollToBottom(scrollRef, messages);
-
+  
   return (
-    <div className="flex flex-col h-screen bg-[#000414]">
+    <div className="flex flex-col h-screen">
       <Header title={getTodayDate()} />
-      
+
       {/* 채팅 메시지 영역 */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 chat-scroll-area" ref={scrollRef}>
         {messages.map((message, index) => (

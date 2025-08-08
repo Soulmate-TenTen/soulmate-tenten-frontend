@@ -19,13 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body 
-        className="mx-auto flex max-w-[402px] flex-col"
-        suppressHydrationWarning={true}
-      >
+      <body suppressHydrationWarning={true}>
         <NextAuthProvider>
           <QueryClientProvider>
-            {children}
+            <div className="mx-auto flex max-w-[402px] flex-col bg-[#000414] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+              {children}
+            </div>
             <ReactQueryDevtools />
           </QueryClientProvider>
         </NextAuthProvider>
