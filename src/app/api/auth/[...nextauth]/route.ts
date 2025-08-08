@@ -1,7 +1,6 @@
-import NextAuth, { Session, User } from "next-auth";
+import NextAuth, { Account, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Kakao from "next-auth/providers/kakao";
-import { getSession } from "next-auth/react";
 
 const authOptions = {
   providers: [
@@ -34,28 +33,32 @@ const authOptions = {
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       if (url.startsWith(baseUrl)) {
-        const session = await getSession();
-        if (session?.user?.newMemberYn === 'Y') {
-          return `${baseUrl}/onboarding`;
-        } else {
-          return `${baseUrl}/`;
-        }
+        return `${baseUrl}/`;
       }
       return url;
     },
-    async session({ session, token }: { session: Session, token: JWT }) {
-      if (token.newMemberYn) {
-        session.user.newMemberYn = token.newMemberYn;
-        session.user.id = token.id;
+    async jwt({ token, account, user }: { token: JWT, account: Account | null, user: User }) {
+      if (account?.provider === 'kakao') {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
       }
-      return session;
-    },
-    async jwt({ token, user }: { token: JWT, user: User }) {
+      
       if (user?.newMemberYn) {
         token.newMemberYn = user.newMemberYn;
         token.id = user.id;
       }
       return token;
+    },
+    async session({ session, token }: { session: Session, token: JWT }) {
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      
+      if (token.newMemberYn) {
+        session.user.newMemberYn = token.newMemberYn;
+        session.user.id = token.id;
+      }
+      
+      return session;
     }
   },
 };
