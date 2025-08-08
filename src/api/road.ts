@@ -1,5 +1,5 @@
 import { http } from "@/lib/http";
-import { Road } from "@/types/calendar";
+import { Road, RoadDetail } from "@/types/diary";
 import { getSession } from "next-auth/react";
 
 interface IGetRoadList {
@@ -18,4 +18,20 @@ export async function checkCalendarRoadDay({ selectMonth }: ICheckCalendarRoadDa
   return await http
     .get(`/api/road/checkCalendarRoadDay?memberId=${session?.user?.id}&selectMonth=${selectMonth}`)
     .then((res) => res.data.existsRoadDay);
+}
+
+interface IGetRoadDetail {
+  roadId: number;
+}
+export async function getRoadDetail({ roadId }: IGetRoadDetail): Promise<RoadDetail> {
+  return await http.get(`/api/road/getRoadDetail?roadId=${roadId}`).then((res) => res.data);
+}
+
+interface ISaveRoad {
+  id: number;
+  result: "A" | "B";
+  review: string;
+}
+export async function saveRoad({ id, result, review }: ISaveRoad) {
+  return await http.patch(`/api/road/saveRoad`, { id, result, review });
 }
