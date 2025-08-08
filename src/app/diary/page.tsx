@@ -23,7 +23,7 @@ export default function DiaryPage() {
   const [month, setMonth] = useState(today.getMonth() + 1); // 1~12
   const [day, setDay] = useState(today.getDate());
   const formatted = getFormattedDate(year, month, day);
-  const { data } = useGetRoadList({ selectDate: formatted });
+  const { data, isLoading } = useGetRoadList({ selectDate: formatted });
 
   const setDate = (newMonth: number) => {
     if (newMonth > 12) {
@@ -42,6 +42,7 @@ export default function DiaryPage() {
     setSelectedDate(new Date(newSelectedDate));
   }, [day, month, year]);
 
+  console.log(data);
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-col grow items-center">
@@ -73,7 +74,7 @@ export default function DiaryPage() {
 
         {/* 하단 */}
         <div className="flex flex-col grow w-full justify-end">
-          {data?.length === 0 ? (
+          {isLoading ? null : !data || data.length === 0 ? (
             <DiaryEmpty />
           ) : (
             <DiaryList
