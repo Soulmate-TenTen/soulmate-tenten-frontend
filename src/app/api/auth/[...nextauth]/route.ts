@@ -1,7 +1,6 @@
 import NextAuth, { Account, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Kakao from "next-auth/providers/kakao";
-import { getSession } from "next-auth/react";
 
 const authOptions = {
   providers: [
@@ -34,12 +33,7 @@ const authOptions = {
     },
     async redirect({ url, baseUrl }: { url: string, baseUrl: string }) {
       if (url.startsWith(baseUrl)) {
-        const session = await getSession();
-        if (session?.user?.newMemberYn === 'Y') {
-          return `${baseUrl}/onboarding`;
-        } else {
-          return `${baseUrl}/`;
-        }
+        return `${baseUrl}/`;
       }
       return url;
     },
