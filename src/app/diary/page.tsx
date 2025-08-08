@@ -40,7 +40,7 @@ export default function DiaryPage() {
   useEffect(() => {
     const newSelectedDate = getFormattedDate(year, month, day);
     setSelectedDate(new Date(newSelectedDate));
-  }, [day]);
+  }, [day, month, year]);
 
   return (
     <div className="flex flex-col min-h-screen">

@@ -1,30 +1,13 @@
 import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { ChatRequest, ChatMessage } from './type';
+import { ChatMessage } from './type';
 import { useChatStore } from '../../store/useChatStore';
+import { chat, resetChatMemory } from './api';
+import { useSession } from 'next-auth/react';
+import { Mode } from './type';
 
 /* 스트리밍 속도 조절을 위한 유틸리티 함수 */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-/* 채팅 호출 함수 */
-export async function invoke(message: string): Promise<void> {
-  const { addMessage, messages } = useChatStore.getState();
-  
-  const userMessage: ChatMessage = {
-    role: 'user',
-    content: [{ type: 'text', text: message }]
-  };
-  addMessage(userMessage);
-  
-  const allMessages = [
-    ...messages,
-    userMessage
-  ];
-  
-  stream({
-    messages: allMessages
-  });
-}
 
 /* 입력창 크기 조절 훅 */
 export function useResizeInput(
@@ -49,11 +32,15 @@ export function useResizeInput(
   }, [input, textareaRef]);
 }
 
-/* 스트리밍 함수 */
-export async function stream(data: ChatRequest): Promise<void> {
-  const apiKey = process.env.NEXT_PUBLIC_CLOVA_API_KEY;
-  const requestId = crypto.randomUUID();
-  const { addMessage, updateLastMessage, setIsLoading } = useChatStore.getState();
+/* 채팅 호출 함수 */
+export async function invoke(memberId: number, question: string, useStream: boolean): Promise<void> {
+  const { addMessage, updateLastMessage, setIsLoading, setRoadId } = useChatStore.getState();
+
+  const userMessage: ChatMessage = {
+    role: 'user',
+    content: [{ type: 'text', text: question }]
+  };
+  addMessage(userMessage);
 
   setIsLoading(true);
   
@@ -63,27 +50,20 @@ export async function stream(data: ChatRequest): Promise<void> {
   };
   addMessage(assistantMessage);
 
-  return await fetchEventSource('/api/clova/v3/chat-completions/HCX-DASH-002', {
+  if (useStream) {
+  return await fetchEventSource('/api/chatting/sse/send', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'X-NCP-CLOVASTUDIO-REQUEST-ID': requestId,
       'Content-Type': 'application/json',
       'Accept': 'text/event-stream',
+      'x-api-route': 'true'
     },
     body: JSON.stringify({
-      messages: data.messages,
-      topP: data.topP || 0.8,
-      topK: data.topK || 0,
-      maxTokens: data.maxTokens || 256,
-      temperature: data.temperature || 0.5,
-      repetitionPenalty: data.repetitionPenalty || 1.1,
-      stop: data.stop || [],
-      seed: data.seed || 0,
-      includeAiFilters: data.includeAiFilters !== false,
+      question: question,
+      memberId: memberId
     }),
     async onmessage(event) {
-      if (event.event === 'token' && event.data && event.data !== '[DONE]') {
+      if (event.data && event.data !== '[DONE]') {
         try {
           const parsed = JSON.parse(event.data);
           if (parsed.message && parsed.message.content) {
@@ -102,8 +82,14 @@ export async function stream(data: ChatRequest): Promise<void> {
     },
     onclose() {
       setIsLoading(false);
-    },
-  });
+      },
+    });
+  } else {
+    const response = await chat(memberId, question);
+    updateLastMessage(response.message);
+    setRoadId(response.roadId);
+    setIsLoading(false);
+  }
 }
 
 /* 스크롤 훅 */
@@ -116,4 +102,18 @@ export function useScrollToBottom(
     if (!containerElement) return;
     containerElement.scrollTop = containerElement.scrollHeight;
   }, [messages, scrollRef]);
+}
+
+export function useInitChat(mode: Mode) {
+  const { clearMessages } = useChatStore.getState();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    clearMessages();
+    return () => {
+      if (mode === Mode.CHAT) {
+        resetChatMemory(Number(session?.user?.id));
+      }
+    }
+  }, [clearMessages, mode, session?.user?.id]);
 }

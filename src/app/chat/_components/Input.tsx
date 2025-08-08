@@ -1,10 +1,13 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import arrowUpIcon from "@/assets/images/arrow-up-icon.svg";
-import { invoke, useResizeInput } from "../model";
+import { useResizeInput } from "../model";
+import { useSession } from "next-auth/react";
+import { invoke } from "../model";
 
 export default function ChatInput() {
 
+    const { data: session } = useSession();
     const [input, setInput] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -16,8 +19,8 @@ export default function ChatInput() {
     };
 
     const handleSend = () => {
-        if (input.trim() === "") return;
-        invoke(input);
+        if (input.trim() === "" || !session?.user?.id) return;
+        invoke(Number(session.user.id), input, false);
         setInput("");
     };
 
