@@ -5,13 +5,13 @@ import useSaveRoad from "@/hooks/useSaveRoad";
 import { useDiaryStore } from "@/store/useDiaryStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { use, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
   const [select, setSelect] = useState<null | "A" | "B">(null);
-  const reviewRef = useRef<HTMLTextAreaElement>(null);
+  const [review, setReview] = useState("");
   const { data } = useGetRoadDetail({ roadId: +id });
   const { mutate: saveRoad } = useSaveRoad();
   const { selectedDate } = useDiaryStore();
@@ -30,7 +30,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       {
         id: +id,
         result: select,
-        review: reviewRef.current?.value || "",
+        review,
       },
       {
         onSuccess() {
@@ -39,6 +39,18 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       }
     );
   };
+
+  useEffect(() => {
+    if (data?.review) {
+      setReview(data.review);
+    }
+
+    if (data) {
+      if (data.result) {
+        setSelect(data.result as "A" | "B");
+      }
+    }
+  }, [data]);
 
   return (
     <div className="mt-4 flex flex-col min-h-screen justify-between content-center mx-4">
@@ -79,7 +91,8 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           <div>
             <p className="mb-5 font-semibold">회고</p>
             <textarea
-              ref={reviewRef}
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
               className="text-black w-full resize-none bg-white rounded-xl h-[145px] placeholder-[#A5A5A5] p-4"
               placeholder="그 선택이 어떤 변화를 만들어냈나요?"
             />
