@@ -21,9 +21,9 @@ const ShortButton: React.FC<ShortButtonProps> = ({
   size = 'md',
 }) => {
   const sizeStyles = clsx({
-    'h-10 px-4 text-sm': size === 'sm',
-    'h-12 px-6 text-base': size === 'md',
-    'h-14 px-8 text-lg': size === 'lg',
+    'h-10 w-32 text-sm': size === 'sm',
+    'h-[46px] w-[164px] text-base': size === 'md',
+    'h-14 w-40 text-lg': size === 'lg',
   });
 
   const baseStyles = clsx(
@@ -31,7 +31,7 @@ const ShortButton: React.FC<ShortButtonProps> = ({
     'inline-flex',
     'items-center',
     'justify-center',
-    'rounded-2xl',
+    'rounded-[23px]',
     'font-suit',
     'font-bold',
     'leading-6',
@@ -47,17 +47,21 @@ const ShortButton: React.FC<ShortButtonProps> = ({
     'disabled:transform-none',
     'active:scale-95',
     'hover:scale-[1.02]',
+    'overflow-hidden',
+    'text-ellipsis',
+    'whitespace-nowrap',
+    'cursor-pointer',
     sizeStyles,
     className
   );
 
   const variantStyles = clsx({
-    // Primary variant - gradient background
-    'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl focus:ring-purple-500': 
+    // Primary variant - yellow background
+    'bg-[#FFFBC0] hover:bg-[#FFF8A0] text-[#000414] shadow-lg hover:shadow-xl focus:ring-[#FFFBC0]': 
       variant === 'primary' && !disabled,
     
-    // Secondary variant - border with transparent background
-    'border-2 border-white/20 bg-transparent hover:bg-white/5 text-white focus:ring-white/30': 
+    // Secondary variant - dark background with gray border
+    'bg-[#1C1C1C] border border-[#4E4E4E] hover:bg-[#2A2A2A] text-[#FFFFF6] focus:ring-[#4E4E4E]': 
       variant === 'secondary' && !disabled,
     
     // Disabled state

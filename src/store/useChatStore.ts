@@ -9,16 +9,19 @@ const INITIAL_MESSAGE: ChatMessage = {
 interface ChatStore {
   messages: ChatMessage[];
   isLoading: boolean;
+  roadId: number;
   setMessages: (messages: ChatMessage[]) => void;
   addMessage: (message: ChatMessage) => void;
   updateLastMessage: (content: string) => void;
   setIsLoading: (loading: boolean) => void;
   clearMessages: () => void;
+  setRoadId: (roadId: number) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
   messages: [INITIAL_MESSAGE],
   isLoading: false,
+  roadId: 0,
   setMessages: (messages) => set({ messages }),
   addMessage: (message) => set((state) => ({
     messages: [...state.messages, message]
@@ -52,4 +55,5 @@ export const useChatStore = create<ChatStore>((set) => ({
   setIsLoading: (loading) => set({ isLoading: loading }),
   
   clearMessages: () => set({ messages: [INITIAL_MESSAGE] }),
+  setRoadId: (roadId: number) => set({ roadId }),
 }));

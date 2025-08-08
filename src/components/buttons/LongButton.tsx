@@ -45,8 +45,8 @@ const LongButton: React.FC<LongButtonProps> = ({
   );
 
   const variantStyles = clsx({
-    // Primary variant - gradient background
-    'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl focus:ring-purple-500': 
+    // Primary variant - yellow background with black text
+    'bg-[#FFFBC0] hover:bg-[#FFF9A0] text-[#000414] shadow-lg hover:shadow-xl focus:ring-[#FFFBC0]': 
       variant === 'primary' && !disabled,
     
     // Secondary variant - border with transparent background

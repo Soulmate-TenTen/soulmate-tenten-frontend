@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { ChatRequest, ChatMessage } from './type';
+import { ChatMessage } from './type';
 import { useChatStore } from '../../store/useChatStore';
+import { chat, resetChatMemory } from './api';
+import { useSession } from 'next-auth/react';
+import { Mode } from './type';
 
 /* 스트리밍 속도 조절을 위한 유틸리티 함수 */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -30,12 +33,12 @@ export function useResizeInput(
 }
 
 /* 채팅 호출 함수 */
-export async function invoke(data: ChatRequest): Promise<void> {
-  const { addMessage, updateLastMessage, setIsLoading } = useChatStore.getState();
+export async function invoke(memberId: number, question: string, useStream: boolean): Promise<void> {
+  const { addMessage, updateLastMessage, setIsLoading, setRoadId } = useChatStore.getState();
 
   const userMessage: ChatMessage = {
     role: 'user',
-    content: [{ type: 'text', text: data.question }]
+    content: [{ type: 'text', text: question }]
   };
   addMessage(userMessage);
 
@@ -47,6 +50,7 @@ export async function invoke(data: ChatRequest): Promise<void> {
   };
   addMessage(assistantMessage);
 
+  if (useStream) {
   return await fetchEventSource('/api/chatting/sse/send', {
     method: 'POST',
     headers: {
@@ -55,8 +59,8 @@ export async function invoke(data: ChatRequest): Promise<void> {
       'x-api-route': 'true'
     },
     body: JSON.stringify({
-      question: data.question,
-      memberId: data.memberId
+      question: question,
+      memberId: memberId
     }),
     async onmessage(event) {
       if (event.data && event.data !== '[DONE]') {
@@ -78,8 +82,14 @@ export async function invoke(data: ChatRequest): Promise<void> {
     },
     onclose() {
       setIsLoading(false);
-    },
-  });
+      },
+    });
+  } else {
+    const response = await chat(memberId, question);
+    updateLastMessage(response.message);
+    setRoadId(response.roadId);
+    setIsLoading(false);
+  }
 }
 
 /* 스크롤 훅 */
@@ -92,4 +102,18 @@ export function useScrollToBottom(
     if (!containerElement) return;
     containerElement.scrollTop = containerElement.scrollHeight;
   }, [messages, scrollRef]);
+}
+
+export function initChat(mode: Mode) {
+  const { clearMessages } = useChatStore.getState();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    clearMessages();
+    return () => {
+      if (mode === Mode.CHAT) {
+        resetChatMemory(Number(session?.user?.id));
+      }
+    }
+  }, []);
 }

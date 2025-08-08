@@ -1,3 +1,8 @@
+export enum Mode {
+  CHAT = "chat",
+  REPORT = "report",
+}
+
 export interface ChatMessage {
     role: 'system' | 'user' | 'assistant';
     content: Array<{
@@ -6,8 +11,15 @@ export interface ChatMessage {
     }>;
     isLastMessage?: boolean;
 }
-  
-export interface ChatRequest {
-    question: string;
-    memberId: number;
+
+export interface Report {
+    thinkingContent: string;
+    titleA: string;
+    titleB: string;
+    contentA: string;
+    contentB: string;
+    conclusionTitle: string;
+    conclusion: string;
+    result: string | null;
+    review: string | null;
 }
