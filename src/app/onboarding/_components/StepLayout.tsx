@@ -1,6 +1,7 @@
 import { useStepFormStore } from "@/store/useStepFormStore";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface IStepLayout {
   children: ReactNode;
@@ -9,6 +10,8 @@ interface IStepLayout {
 
 export default function StepLayout({ children, text }: IStepLayout) {
   const { step, goBack } = useStepFormStore();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -17,10 +20,27 @@ export default function StepLayout({ children, text }: IStepLayout) {
     });
   }, [step]);
 
+  const handleBackClick = () => {
+    const fromMypage = searchParams.get('from') === 'mypage';
+    
+    if (step === 1 && fromMypage) {
+      router.push("/mypage");
+    } else {
+      goBack();
+    }
+  };
+
   return (
     <div className="mt-2">
       {/* 뒤로 가기 버튼 */}
-      <Image className="cursor-pointer" src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={goBack} />
+      <Image 
+        className="cursor-pointer" 
+        src="/back-icon.svg" 
+        width={32} 
+        height={32} 
+        alt="뒤로" 
+        onClick={handleBackClick} 
+      />
 
       {/* progress bar */}
       <div className="mt-5 w-full bg-[#444] rounded-full h-2 mx-2 mb-[15%]">

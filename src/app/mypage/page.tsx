@@ -7,11 +7,13 @@ import Footer from "@/components/Footer";
 import { signOut, useSession } from "next-auth/react";
 import { getCount, deleteUser, unsubscribeKakao } from "./api";
 import { useRouter } from "next/navigation";
+import { useStepFormStore } from "@/store/useStepFormStore";
 
 export default function MyPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const [count, setCount] = useState(0);
+  const { reset, goNext } = useStepFormStore();
 
   const handleLogout = () => {
     signOut({ callbackUrl: "/login" });
@@ -21,6 +23,12 @@ export default function MyPage() {
     await unsubscribeKakao();
     await deleteUser();
     signOut({ callbackUrl: "/login" });
+  };
+
+  const handleOnboardingClick = () => {
+    reset();
+    goNext();
+    router.push("/onboarding?from=mypage");
   };
 
   useEffect(() => {
@@ -62,7 +70,7 @@ export default function MyPage() {
         <div className="space-y-0">
           <div className="border-b border-[#3A3A3A] hover:border-[#5A5A5A] transition-all duration-200">
             <button 
-              onClick={() => router.push("/onboarding")} 
+              onClick={handleOnboardingClick} 
               className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
             >
               내 가치관 및 기준 재설정
