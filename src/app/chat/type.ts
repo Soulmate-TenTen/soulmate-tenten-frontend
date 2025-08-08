@@ -8,13 +8,6 @@ export interface ChatMessage {
 }
   
 export interface ChatRequest {
-    messages: ChatMessage[];
-    topP?: number;
-    topK?: number;
-    maxTokens?: number;
-    temperature?: number;
-    repetitionPenalty?: number;
-    stop?: string[];
-    seed?: number;
-    includeAiFilters?: boolean;
+    question: string;
+    memberId: number;
 }
