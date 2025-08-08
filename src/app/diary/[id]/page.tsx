@@ -5,7 +5,7 @@ import useSaveRoad from "@/hooks/useSaveRoad";
 import { useDiaryStore } from "@/store/useDiaryStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useRef, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
