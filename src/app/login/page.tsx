@@ -23,7 +23,7 @@ export default function LoginPage() {
         <Image src={character} alt="소울메이트 캐릭터" />
         <div className="relative z-10">
           <button
-            onClick={() => signIn("kakao")}
+            onClick={() => signIn("kakao", { callbackUrl: "/login-redirect" })}
             className="w-[338px] h-[46px] bg-[#FFEC45] mt-[43px] hover:bg-[#FFE600] text-[#3C1E1E] font-extrabold rounded-[30px] transition-colors duration-200 flex items-center justify-center shadow-lg cursor-pointer"
           >
             <div className="flex items-center gap-2">
