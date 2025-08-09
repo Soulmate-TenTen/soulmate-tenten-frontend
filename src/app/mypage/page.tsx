@@ -68,7 +68,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className="space-y-0">
-          <div className="border-b border-[#3A3A3A] hover:border-[#5A5A5A] transition-all duration-200">
+          <div className="border-b border-[#252525] transition-all duration-200">
             <button 
               onClick={handleOnboardingClick} 
               className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
@@ -76,7 +76,7 @@ export default function MyPage() {
               내 가치관 및 기준 재설정
             </button>
           </div>
-          <div className="border-b border-[#3A3A3A] hover:border-[#5A5A5A] transition-all duration-200">
+          <div className="border-b border-[#252525] transition-all duration-200">
             <button 
               onClick={() => window.open('https://www.notion.so/2492c69bf1d2807488cec076ae4e40dd?source=copy_link', '_blank')}
               className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
@@ -84,15 +84,15 @@ export default function MyPage() {
               이용약관
             </button>
           </div>
-          <div className="border-b border-[#3A3A3A] hover:border-[#5A5A5A] transition-all duration-200">
+          <div className="border-b border-[#252525] transition-all duration-200">
             <button 
               onClick={() => window.open('https://www.notion.so/2492c69bf1d280929cd5c649d41f6be2?source=copy_link', '_blank')}
-              className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
+              className="text-[#FFFBC0] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFBC0] rounded-md transition-all duration-200 ease-in-out cursor-pointer"
             >
               개인정보처리방침
             </button>
           </div>
-          <div className="border-b border-[#3A3A3A] hover:border-[#5A5A5A] transition-all duration-200">
+          <div className="border-b border-[#252525] transition-all duration-200">
             <button
               onClick={handleWithdrawal}
               className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
