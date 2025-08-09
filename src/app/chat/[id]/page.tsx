@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/Header";
+import { LongButton } from "@/components/buttons";
 import { getTodayDate } from "@/lib/utils";
 import { getChatHistory } from "../api";
 import { ChatMessage } from "../type";
@@ -19,6 +20,7 @@ export default function ChatPage() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!id) return;
@@ -70,7 +72,7 @@ export default function ChatPage() {
 
       {/* 채팅 메시지 영역 */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 chat-scroll-area" ref={scrollRef}>
-        {chatHistory.length > 0 ? (
+        {chatHistory.length > 0 && (
           chatHistory.map((message, index) => (
             <Message
               key={index}
@@ -78,13 +80,8 @@ export default function ChatPage() {
               role={message.role}
             />
           ))
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-[#FFFFF6] text-center">
-              아직 채팅 기록이 없습니다.
-            </p>
-          </div>
         )}
+        <LongButton onClick={() => router.back()}>확인</LongButton>
       </div>
     </div>
   );
