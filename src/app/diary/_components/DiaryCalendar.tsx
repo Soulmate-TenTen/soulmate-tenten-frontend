@@ -49,8 +49,12 @@ export default function DiaryCalendar({ year, month, selectedDate, onSelect }: I
 
         {/* 현재 달 날짜 */}
         {days.map((day) => (
-          <button key={day} className={"flex flex-col items-center h-14 transition text-[#4E4E4E] cursor-pointer"} onClick={() => onSelect(day)}>
-            <div className={`leading-none ${isSelected(day) && "w-full rounded-full bg-[#fffbc0] hover:bg-[#fffbc0]"}`}>{day}</div>
+          <button
+            key={day}
+            className={"flex flex-col items-center h-12 transition text-[#4E4E4E] cursor-pointer text-[10px]"}
+            onClick={() => onSelect(day)}
+          >
+            <div className={`leading-none ${isSelected(day) && "px-2 rounded-full bg-[#fffbc0] hover:bg-[#fffbc0]"}`}>{day}</div>
             {data?.includes(day) && (
               <div className="flex-grow flex justify-center items-center">
                 <Image src="/calendar-icon.svg" width={26} height={22} alt="체크" />

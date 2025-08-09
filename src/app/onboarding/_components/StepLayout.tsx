@@ -31,7 +31,7 @@ export default function StepLayout({ children, text }: IStepLayout) {
   };
 
   return (
-    <div className="h-[100svh] sm:h-dvh flex flex-col overflow-hidden">
+    <div className="h-[100svh] sm:h-dvh flex flex-col overflow-hidden my-4">
       {/* 뒤로 가기 버튼 */}
       <Image className="cursor-pointer" src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={handleBackClick} />
 

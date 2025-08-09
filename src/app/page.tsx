@@ -22,7 +22,7 @@ export default function HomePage() {
   const formatted = `${year}년 ${month}월 ${day}일`;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-[100dvh]">
       {/* 커스텀 애니메이션 정의 */}
       <style>
         {`
@@ -33,7 +33,7 @@ export default function HomePage() {
         `}
       </style>
 
-      <div className="ml-8 mt-8 flex-1 flex flex-col justify-between my-5">
+      <div className="px-6 mt-8 flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
         <Image src="/logo.svg" width={80} height={10} alt="로고" />
 
@@ -55,7 +55,7 @@ export default function HomePage() {
         </div>
 
         {/* 채팅 바로가기 */}
-        <div className="flex justify-between gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
+        <div className="w-full flex justify-between gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
           <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
           <div>
             <p className="font-bold">오늘은 어떤 선택이 있으신가요?</p>
