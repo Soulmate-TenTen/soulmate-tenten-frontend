@@ -55,12 +55,15 @@ export default function ReportPage() {
 
   /* 나중에 선택하기 */
   const handleBack = () => {
-    router.push("/diary");
+    router.push("/");
   };
 
   /* 선택 하러가기 */
   const handleSelect = () => {
-    router.push(`/diary/${roadId}`);
+    if (report.result) {
+      saveReport(roadId, report.result);
+      router.push("/diary");
+    }
   };
 
   return (
@@ -135,7 +138,7 @@ export default function ReportPage() {
           <ShortButton variant="secondary" onClick={handleBack}>
             나중에 선택하기
           </ShortButton>
-          <ShortButton onClick={handleSelect}>선택 하러하기</ShortButton>
+          <ShortButton onClick={handleSelect}>선택하기</ShortButton>
         </div>
       </div>
     </div>
