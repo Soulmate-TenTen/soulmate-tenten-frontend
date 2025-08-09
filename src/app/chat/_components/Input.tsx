@@ -27,24 +27,23 @@ export default function ChatInput() {
     useResizeInput(textareaRef, input);
 
     return (
-        <div className="bg-[#27272A] rounded-tl-[12px] rounded-tr-[12px] h-[111px] flex px-8 gap-2">
-            <div className="flex-1 bg-white rounded-[29px] p-2 h-[38px] mt-[23px]">
+        <div className="bg-[#27272A] rounded-tl-[12px] rounded-tr-[12px] min-h-[111px] flex px-8 gap-2 items-center">
+            <div className="flex-1 bg-white rounded-[29px] p-2 min-h-[38px] mb-[20px]">
                 <textarea
                     ref={textareaRef}
                     placeholder="메시지를 입력하세요..."
-                    className="w-full bg-transparent text-black h-[22px] focus:outline-none resize-none pr-4 pl-4 align-middle"
+                    className="w-full bg-transparent text-black focus:outline-none resize-none pr-4 pl-4"
                     style={{
                         scrollbarWidth: 'thin',
                         scrollbarColor: '#CBD5E0 transparent',
-                        verticalAlign: 'middle',
-                        lineHeight: '22px'
+                        height: '22px'
                     }}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
             </div>
-            <button className="bg-[#FFFBC0] rounded-full p-2 h-[38px] mt-[23px]" onClick={handleSend}>
+            <button className="bg-[#FFFBC0] rounded-full p-2 h-[38px] mb-[20px]" onClick={handleSend}>
                 <Image src={arrowUpIcon} alt="arrow-up" width={22} height={22} />
             </button>
         </div>       
