@@ -6,7 +6,7 @@ import { getReport, saveReport } from "../api";
 import { useChatStore } from "@/store/useChatStore";
 import { useRouter } from "next/navigation";
 import { ShortButton } from "@/components/buttons";
-import ReactMarkdown from "react-markdown";
+import Markdown from "@/components/Markdown";
 
 export default function ReportPage() {
   const router = useRouter();
@@ -103,7 +103,7 @@ export default function ReportPage() {
           {expandedA && (
             <div className="mt-4 pt-4 border-t border-[#343434]/20">
               <div className="text-black text-sm leading-relaxed prose prose-sm max-w-none prose-p:text-black prose-p:text-sm prose-p:leading-relaxed">
-                <ReactMarkdown>{report.contentA}</ReactMarkdown>
+                <Markdown text={report.contentA} />
               </div>
             </div>
           )}
@@ -131,7 +131,7 @@ export default function ReportPage() {
           {expandedB && (
             <div className="mt-4 pt-4 border-t border-[#C9C9C9]/20">
               <div className="text-[#FFFFF6] text-sm leading-relaxed prose prose-sm max-w-none prose-p:text-[#FFFFF6] prose-p:text-sm prose-p:leading-relaxed">
-                <ReactMarkdown>{report.contentB}</ReactMarkdown>
+                <Markdown text={report.contentB} />
               </div>
             </div>
           )}
