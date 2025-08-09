@@ -32,7 +32,7 @@ export default function ChatInput() {
                 <textarea
                     ref={textareaRef}
                     placeholder="메시지를 입력하세요..."
-                    className="w-full bg-transparent text-black h-[22px] focus:outline-none resize-none text-sm leading-5 pr-4 align-middle"
+                    className="w-full bg-transparent text-black h-[22px] focus:outline-none resize-none leading-5 pr-4 pl-4 align-middle"
                     style={{
                         scrollbarWidth: 'thin',
                         scrollbarColor: '#CBD5E0 transparent',
