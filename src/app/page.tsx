@@ -23,6 +23,16 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* 커스텀 애니메이션 정의 */}
+      <style>
+        {`
+          @keyframes swayX {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+          }
+        `}
+      </style>
+
       <div className="flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
         <Image src="/logo.svg" width={80} height={10} alt="로고" />
@@ -41,7 +51,7 @@ export default function HomePage() {
             <Image className="ml-[-10%]" src="/home-chat.svg" width={233} height={63} alt={`오늘은 ${formatted}이에요.`} />
           </div>
           {/* 캐릭터 */}
-          <Image className="ml-[40%] mt-10" src="/home-char.svg" width={158} height={146} alt="캐릭터" />
+          <Image className="ml-[40%] mt-10 [animation:swayX_2s_ease-in-out_infinite]" src="/home-char.svg" width={158} height={146} alt="캐릭터" />
         </div>
 
         {/* 채팅 바로가기 */}
