@@ -37,7 +37,7 @@ export default function ChatInput() {
                         scrollbarWidth: 'thin',
                         scrollbarColor: '#CBD5E0 transparent',
                         height: '22px',
-                        lineHeight: '16px',
+                        lineHeight: '26px',
                     }}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
