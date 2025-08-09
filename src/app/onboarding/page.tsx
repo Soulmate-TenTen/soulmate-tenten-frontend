@@ -117,7 +117,7 @@ export default function Page() {
         <div className="w-full max-w-[402px] mx-auto px-8">
           <button
             className={[
-              "w-full h-[56px] rounded-3xl font-bold transition-colors text-[#000414]",
+              "w-full h-[56px] rounded-full font-bold transition-colors text-[#000414]",
               !isDisabled && "bg-[#FFFBC0]",
               isDisabled && "bg-[#6C6C6C] cursor-not-allowed",
             ].join(" ")}
