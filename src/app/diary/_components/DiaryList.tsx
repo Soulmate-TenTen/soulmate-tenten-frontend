@@ -21,7 +21,7 @@ export default function DiaryList({ diaryList, selectedDateText }: IDiaryList) {
 
   return (
     <div className="grow flex flex-col p-8 bg-[#27272A] rounded-t-2xl gap-4">
-      <p>{selectedDateText}</p>
+      <p className="font-bold">{selectedDateText}</p>
       {diaryList.map((diary) => (
         <div key={diary.id} className="text-black p-4 rounded-xl bg-white flex gap-1 cursor-pointer" onClick={() => onClick(diary.id)}>
           <div className="grow flex flex-col gap-1 min-w-0">
