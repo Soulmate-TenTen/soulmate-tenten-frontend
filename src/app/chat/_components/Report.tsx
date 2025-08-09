@@ -60,7 +60,7 @@ export default function ReportPage() {
 
   /* 선택 하러가기 */
   const handleSelect = () => {
-    router.push(`/diary/${roadId}?from=chat`);
+    router.push(`/diary/${roadId}`);
   };
 
   return (
