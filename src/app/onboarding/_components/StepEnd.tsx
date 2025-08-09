@@ -27,7 +27,7 @@ export default function StepEnd() {
         </div>
 
         {/* 캐릭터 + 말풍선*/}
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex flex-col items-end gap-2 pr-2">
           <Image src="/onboarding-chat-2.svg" width={274} height={56} alt="지금 이 선택부터, 소울메이트와 함께해요" />
           <Image className="[animation:swayX_2s_ease-in-out_infinite]" src="/onboarding-char-2.svg" width={150} height={130} alt="캐릭터" />
         </div>
