@@ -33,7 +33,7 @@ export default function HomePage() {
         `}
       </style>
 
-      <div className="flex-1 flex flex-col justify-between my-5">
+      <div className="ml-8 mt-8 flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
         <Image src="/logo.svg" width={80} height={10} alt="로고" />
 
