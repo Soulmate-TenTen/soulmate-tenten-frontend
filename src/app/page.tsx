@@ -33,7 +33,7 @@ export default function HomePage() {
         `}
       </style>
 
-      <div className="flex-1 flex flex-col justify-between my-5">
+      <div className="ml-8 mt-8 flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
         <Image src="/logo.svg" width={80} height={10} alt="로고" />
 
@@ -47,7 +47,7 @@ export default function HomePage() {
         <div className=" relative flex flex-col items-center justify-center">
           {/* 말풍선 */}
           <div className="relative">
-            <div className="absolute mt-3.5 ml-2 text-[14px] text-[#343434]">오늘은 {formatted}이에요.</div>
+            <div className="absolute mt-3.5 ml-2 text-[14px] text-[#343434] font-semibold">오늘은 {formatted}이에요.</div>
             <Image className="ml-[-10%]" src="/home-chat.svg" width={233} height={63} alt={`오늘은 ${formatted}이에요.`} />
           </div>
           {/* 캐릭터 */}
@@ -58,7 +58,7 @@ export default function HomePage() {
         <div className="flex justify-between gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
           <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
           <div>
-            <p>오늘은 어떤 선택이 있으신가요?</p>
+            <p className="font-bold">오늘은 어떤 선택이 있으신가요?</p>
             <p className="text-[12px] mt-1">틀린 선택은 없어요. 저와 함께 이야기해봐요.</p>
           </div>
           <Image src="/right-arrow.svg" width={20} height={20} alt="오른쪽 화살표" />

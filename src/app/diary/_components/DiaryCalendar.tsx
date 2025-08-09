@@ -53,7 +53,7 @@ export default function DiaryCalendar({ year, month, selectedDate, onSelect }: I
             <div className={`leading-none ${isSelected(day) && "w-full rounded-full bg-[#fffbc0] hover:bg-[#fffbc0]"}`}>{day}</div>
             {data?.includes(day) && (
               <div className="flex-grow flex justify-center items-center">
-                <Image src="/calendar-icon.svg" width={22} height={26} alt="체크" />
+                <Image src="/calendar-icon.svg" width={26} height={22} alt="체크" />
               </div>
             )}
           </button>
