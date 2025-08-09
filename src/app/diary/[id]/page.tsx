@@ -69,7 +69,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         </div>
 
         {/* 기로 내용 */}
-        <div className="bg-white text-black rounded-xl p-4 mb-3">
+        <div className="bg-white text-black rounded-xl p-7 mb-3">
           <p className="font-bold mb-4">{data?.conclusionTitle}</p>
           <p className="text-[13px]">{data?.conclusion}</p>
         </div>
@@ -78,14 +78,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         <div className="flex gap-2 mb-12">
           <button
             style={{ backgroundColor: select === "A" ? "#FFFBC0" : "#1C1C1C", color: select === "A" ? "black" : "white" }}
-            className="rounded-full w-full py-2 font-bold"
+            className="rounded-full w-full py-4 font-bold"
             onClick={() => setSelect("A")}
           >
             A {data?.titleA}
           </button>
           <button
             style={{ backgroundColor: select === "B" ? "#FFFBC0" : "#1C1C1C", color: select === "B" ? "black" : "white" }}
-            className="rounded-full w-full py-2 font-bold"
+            className="rounded-full w-full py-4 font-bold"
             onClick={() => setSelect("B")}
           >
             B {data?.titleB}
@@ -108,10 +108,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
       {/* 버튼 */}
       <div className="flex flex-col gap-3 mb-6 font-bold">
-        <button style={{ backgroundColor: select ? "#FFFBC0" : "#6C6C6C" }} className="text-[#000414] w-full rounded-full py-2" onClick={save}>
+        <button
+          style={{ backgroundColor: select ? "#FFFBC0" : "#6C6C6C" }}
+          className="text-[#000414] w-full rounded-full py-4 font-bold"
+          onClick={save}
+        >
           저장하기
         </button>
-        <button className="text-white rounded-full w-full py-2 border border-[#4E4E4E]" onClick={goChat}>
+        <button className="text-white rounded-full w-full py-4 border border-[#4E4E4E] font-bold" onClick={goChat}>
           대화 보러가기
         </button>
       </div>
