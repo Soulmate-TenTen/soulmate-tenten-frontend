@@ -5,7 +5,7 @@ import useSaveRoad from "@/hooks/useSaveRoad";
 import { useDiaryStore } from "@/store/useDiaryStore";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import DiarySave from "../_components/DiarySave";
 
@@ -17,12 +17,9 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [select, setSelect] = useState<null | "A" | "B">(null);
   const [review, setReview] = useState("");
   const [showSaveComponent, setShowSaveComponent] = useState(false);
-
   const { data } = useGetRoadDetail({ roadId: +id });
   const { mutate: saveRoad } = useSaveRoad();
   const { selectedDate } = useDiaryStore();
-  const searchParams = useSearchParams();
-  const from = searchParams.get("from");
 
   const goBack = () => router.back();
   const goChat = () => router.push(`/chat/${id}`);
