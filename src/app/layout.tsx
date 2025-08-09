@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 import "@/app/globals.css";
 
+import Head from "./head";
 import QueryClientProvider from "./QueryClientProvider";
 import NextAuthProvider from "./NextAuthProvider";
 
@@ -19,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <Head />
       <body suppressHydrationWarning={true}>
         <NextAuthProvider>
           <QueryClientProvider>
