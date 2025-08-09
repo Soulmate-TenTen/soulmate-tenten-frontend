@@ -21,9 +21,9 @@ const LongButton: React.FC<LongButtonProps> = ({
   const baseStyles = clsx(
     // Base button styles
     'w-full',
-    'h-14',
+    'h-[46px]',
     'px-6',
-    'rounded-2xl',
+    'rounded-[23px]',
     'font-suit',
     'font-bold',
     'text-base',
