@@ -107,7 +107,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       </div>
 
       {/* 버튼 */}
-      <div className="flex flex-col gap-3 mb-6">
+      <div className="flex flex-col gap-3 mb-6 font-bold">
         <button style={{ backgroundColor: select ? "#FFFBC0" : "#6C6C6C" }} className="text-[#000414] w-full rounded-full py-2" onClick={save}>
           저장하기
         </button>
