@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Report } from "../type";
-import { getReport, saveReport } from "../api";
+import { getReport } from "../api";
 import { useChatStore } from "@/store/useChatStore";
 import { useRouter } from "next/navigation";
 import { ShortButton } from "@/components/buttons";
@@ -55,15 +55,12 @@ export default function ReportPage() {
 
   /* 나중에 선택하기 */
   const handleBack = () => {
-    router.push('/');
+    router.push('/diary');
   };
 
-  /* 선택하기 */
+  /* 선택 하러가기 */
   const handleSelect = () => {
-    if (report.result) {
-      saveReport(roadId, report.result);
-      router.push('/diary');
-    }
+    router.push(`/diary/${roadId}?from=chat`);
   };
 
   return (
@@ -150,7 +147,7 @@ export default function ReportPage() {
       <div className="flex-shrink-0 bg-[#000414] px-8 py-4 ">
         <div className="flex justify-center gap-2">
           <ShortButton variant="secondary" onClick={handleBack}>나중에 선택하기</ShortButton>
-          <ShortButton onClick={handleSelect}>선택하기</ShortButton>
+          <ShortButton onClick={handleSelect}>선택 하러하기</ShortButton>
         </div>
       </div>
     </div>
