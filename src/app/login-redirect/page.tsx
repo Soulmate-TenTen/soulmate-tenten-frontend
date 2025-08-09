@@ -8,10 +8,12 @@ export default function LoginRedirect() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(session?.user?.newMemberYn);
+
     if (status === "authenticated") {
       // 세션에서 신규회원 여부 판단
       const newMemberYn = session?.user?.newMemberYn;
-      if (newMemberYn) {
+      if (newMemberYn === "Y") {
         router.replace("/onboarding");
       } else {
         router.replace("/");
