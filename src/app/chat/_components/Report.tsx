@@ -71,7 +71,7 @@ export default function ReportPage() {
       {/* Main Content */}
       <div className="flex-1 px-8 pb-32">
         {/* Analysis Result */}
-        <div className="bg-[#FFFFF6] rounded-lg p-4 mb-6">
+        <div className="bg-[#FFFFF6] rounded-lg p-4 mb-3">
           <h3 className="text-[#000414] text-base font-bold mb-3">
             {report.conclusionTitle}
           </h3>
@@ -81,7 +81,7 @@ export default function ReportPage() {
         </div>
 
         {/* Option A */}
-        <div className="bg-[#CACACA] rounded-lg p-4 mb-4">
+        <div className="bg-[#CACACA] rounded-lg p-4 mb-3">
           <div 
             className="flex items-center justify-between cursor-pointer"
             onClick={() => handleAccordionClick('A')}
