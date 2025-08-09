@@ -6,6 +6,7 @@ import { getReport, saveReport } from "../api";
 import { useChatStore } from "@/store/useChatStore";
 import { useRouter } from "next/navigation";
 import { ShortButton } from "@/components/buttons";
+import ReactMarkdown from "react-markdown";
 
 export default function ReportPage() {
   const router = useRouter();
@@ -86,7 +87,7 @@ export default function ReportPage() {
             className="flex items-center justify-between cursor-pointer"
             onClick={() => handleAccordionClick('A')}
           >
-            <span className="text-black text-[15px] font-bold">
+            <span className="text-black text-[15px] font-bold text-center w-full">
               A  {report.titleA}
             </span>
             <svg 
@@ -94,16 +95,16 @@ export default function ReportPage() {
               height="6" 
               viewBox="0 0 12 6" 
               fill="none" 
-              className={`text-[#343434] transition-transform duration-200 ${expandedA ? 'rotate-180' : ''}`}
+              className={`text-[#343434] transition-transform duration-200 flex-shrink-0 ml-2 ${expandedA ? 'rotate-180' : ''}`}
             >
               <path d="M1 1L6 5L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           {expandedA && (
             <div className="mt-4 pt-4 border-t border-[#343434]/20">
-              <p className="text-black text-sm leading-relaxed">
-                {report.contentA}
-              </p>
+              <div className="text-black text-sm leading-relaxed prose prose-sm max-w-none prose-p:text-black prose-p:text-sm prose-p:leading-relaxed">
+                <ReactMarkdown>{report.contentA}</ReactMarkdown>
+              </div>
             </div>
           )}
         </div>
@@ -114,7 +115,7 @@ export default function ReportPage() {
             className="flex items-center justify-between cursor-pointer"
             onClick={() => handleAccordionClick('B')}
           >
-            <span className="text-[#FFFFF6] text-[15px] font-bold">
+            <span className="text-[#FFFFF6] text-[15px] font-bold text-center w-full">
               B  {report.titleB}
             </span>
             <svg 
@@ -122,16 +123,16 @@ export default function ReportPage() {
               height="6" 
               viewBox="0 0 12 6" 
               fill="none" 
-              className={`text-[#C9C9C9] transition-transform duration-200 ${expandedB ? 'rotate-180' : ''}`}
+              className={`text-[#C9C9C9] transition-transform duration-200 flex-shrink-0 ml-2 ${expandedB ? 'rotate-180' : ''}`}
             >
               <path d="M1 1L6 5L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           {expandedB && (
             <div className="mt-4 pt-4 border-t border-[#C9C9C9]/20">
-              <p className="text-[#FFFFF6] text-sm leading-relaxed">
-                {report.contentB}
-              </p>
+              <div className="text-[#FFFFF6] text-sm leading-relaxed prose prose-sm max-w-none prose-p:text-[#FFFFF6] prose-p:text-sm prose-p:leading-relaxed">
+                <ReactMarkdown>{report.contentB}</ReactMarkdown>
+              </div>
             </div>
           )}
         </div>
