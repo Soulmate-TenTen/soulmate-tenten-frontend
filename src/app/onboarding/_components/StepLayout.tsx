@@ -31,17 +31,17 @@ export default function StepLayout({ children, text }: IStepLayout) {
   };
 
   return (
-    <div className="h-min-screen flex flex-col">
+    <div className="h-[100svh] sm:h-dvh flex flex-col overflow-hidden">
       {/* 뒤로 가기 버튼 */}
       <Image className="cursor-pointer" src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={handleBackClick} />
 
       {/* progress bar */}
-      <div className="mt-5 bg-[#444] rounded-full h-2 mx-2 mb-[15%]">
+      <div className="mt-5 bg-[#444] rounded-full h-2 mx-2 mb-6">
         <div className="bg-[#fffac4] h-full rounded-full transition-[width] duration-200 ease-in-out" style={{ width: `${progress}%` }} />
       </div>
 
-      <main className="flex-1 overflow-y-auto px-4 pb-[calc(env(safe-area-inset-bottom)+120px)]">
-        <p className="font-bold text-[22px] text-center my-8">{text}</p>
+      <main className="px-4">
+        <p className="font-bold text-[22px] text-center my-4">{text}</p>
         {children}
         <div className="h-6" />
       </main>
