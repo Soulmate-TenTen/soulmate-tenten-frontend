@@ -31,7 +31,7 @@ export default function StepLayout({ children, text }: IStepLayout) {
   };
 
   return (
-    <div className="mt-2">
+    <div className="h-min-screen flex flex-col">
       {/* 뒤로 가기 버튼 */}
       <Image className="cursor-pointer" src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={handleBackClick} />
 
@@ -40,8 +40,11 @@ export default function StepLayout({ children, text }: IStepLayout) {
         <div className="bg-[#fffac4] h-full rounded-full transition-[width] duration-200 ease-in-out" style={{ width: `${progress}%` }} />
       </div>
 
-      <p className="text-bold text-[22px] text-center mb-14">{text}</p>
-      {children}
+      <main className="flex-1 overflow-y-auto px-4 pb-[calc(env(safe-area-inset-bottom)+120px)]">
+        <p className="font-bold text-[22px] text-center my-8">{text}</p>
+        {children}
+        <div className="h-6" />
+      </main>
     </div>
   );
 }

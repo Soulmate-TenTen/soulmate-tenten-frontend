@@ -35,6 +35,29 @@ export default function Page() {
   const { data: session } = useSession();
   const { step, direction, goNext, data } = useStepFormStore();
 
+  const isValidCurrentStep = (() => {
+    switch (step) {
+      case 0:
+        return true;
+      case 1:
+        return !!data.step1;
+      case 2:
+        return !!data.step2;
+      case 3:
+        return !!data.step3;
+      case 4:
+        return !!data.step4;
+      case 5:
+        return !!data.step5;
+      case 6:
+        return true;
+      default:
+        return false;
+    }
+  })();
+
+  const isDisabled = !isValidCurrentStep;
+
   const getTextByStep = () => {
     if (step === 0) return "시작하기";
     if (step >= 1 && step <= 5) return "다음";
@@ -50,9 +73,9 @@ export default function Page() {
         decision: data.step2 as Step2CategoryType,
         regret: data.step3 as Step3CategoryType,
         decisionTrust: data.step4 as Step4CategoryType,
-        soulmateType: data.step5 === "이성을 기반으로 해결책을 제시" ? "T" : "F"
+        soulmateType: data.step5 === "이성을 기반으로 해결책을 제시" ? "T" : "F",
       };
-      
+
       saveOnboarding(transformedData);
       router.push("/");
     }
@@ -69,7 +92,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="mx-8 h-screen flex flex-col justify-between pt-12">
+    <div className="mx-8 h-min-screen flex flex-col justify-between">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={step}
@@ -83,17 +106,26 @@ export default function Page() {
             ease: "easeInOut",
             duration: 0.3,
           }}
-          className="inset-0 w-full h-full overflow-hidden"
+          className="inset-0 w-full h-full overflow-y-hidden"
         >
           {stepComponents[step]}
           {step === 6 && <StepEnd />}
         </motion.div>
       </AnimatePresence>
 
-      <div className="w-full max-w-[402px] mx-auto mb-14">
-        <button className="w-full h-[46px] bg-[#FFFBC0] rounded-3xl text-[#000414] font-bold" onClick={goNext}>
-          {getTextByStep()}
-        </button>
+      <div className="fixed left-0 right-0 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-50 mb-12">
+        <div className="w-full max-w-[402px] mx-auto px-8">
+          <button
+            className={[
+              "w-full h-[56px] rounded-3xl font-bold transition-colors text-[#000414]",
+              !isDisabled && "bg-[#FFFBC0]",
+              isDisabled && "bg-[#6C6C6C] cursor-not-allowed",
+            ].join(" ")}
+            onClick={goNext}
+          >
+            {getTextByStep()}
+          </button>
+        </div>
       </div>
     </div>
   );
