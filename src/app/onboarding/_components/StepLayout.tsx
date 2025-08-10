@@ -40,11 +40,10 @@ export default function StepLayout({ children, text }: IStepLayout) {
         <div className="bg-[#fffac4] h-full rounded-full transition-[width] duration-200 ease-in-out" style={{ width: `${progress}%` }} />
       </div>
 
-      <main className="px-4">
-        <p className="font-bold text-[22px] text-center my-4">{text}</p>
-        {children}
-        <div className="h-6" />
-      </main>
+      {/* body */}
+      <p className="font-bold text-[22px] text-center mt-4 mb-8">{text}</p>
+      {children}
+      <div className="h-6" />
     </div>
   );
 }

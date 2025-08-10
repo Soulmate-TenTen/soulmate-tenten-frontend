@@ -17,7 +17,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [select, setSelect] = useState<null | "A" | "B">(null);
   const [review, setReview] = useState("");
   const [showSaveComponent, setShowSaveComponent] = useState(false);
-
   const { data } = useGetRoadDetail({ roadId: +id });
   const { mutate: saveRoad } = useSaveRoad();
   const { selectedDate } = useDiaryStore();
