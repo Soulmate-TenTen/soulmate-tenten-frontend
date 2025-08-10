@@ -46,16 +46,17 @@ export default function HomePage() {
 
         <div className=" relative flex flex-col items-center justify-center">
           {/* 말풍선 */}
-          <div className="relative">
-            <div className="absolute mt-3.5 ml-2 text-[14px] text-[#343434] font-semibold">오늘은 {formatted}이에요.</div>
+          <div className="absolute inset-0 flex items-center justify-center px-6">
+            <span className="text-[14px] leading-none text-[#343434] font-semibold whitespace-nowrap">오늘은 {formatted}이에요.</span>
             <Image className="ml-[-10%]" src="/home-chat.svg" width={233} height={63} alt={`오늘은 ${formatted}이에요.`} />
           </div>
+
           {/* 캐릭터 */}
           <Image className="ml-[40%] mt-10 [animation:swayX_2s_ease-in-out_infinite]" src="/home-char.svg" width={158} height={146} alt="캐릭터" />
         </div>
 
         {/* 채팅 바로가기 */}
-        <div className="w-full flex justify-between gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
+        <div className="w-full flex justify-between items-center gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
           <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
           <div>
             <p className="font-bold">오늘은 어떤 선택이 있으신가요?</p>
