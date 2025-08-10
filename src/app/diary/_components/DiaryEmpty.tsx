@@ -9,9 +9,6 @@ export default function DiaryEmpty() {
   };
   return (
     <div className="flex flex-col gap-12 justify-center items-center">
-      {/* 캐릭터 */}
-      <Image src="/calendar-char.svg" width={168} height={137} alt="저와 함께 시작해볼까요?" />
-
       {/* 채팅 바로가기 */}
       <div className="mb-8 flex justify-between gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
         <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
