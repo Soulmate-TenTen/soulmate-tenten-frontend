@@ -92,7 +92,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="mx-8 h-min-screen flex flex-col justify-between">
+    <div className="mx-5 h-min-screen flex flex-col justify-between">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={step}
@@ -113,7 +113,7 @@ export default function Page() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="fixed left-0 right-0 bottom-[calc(env(safe-area-inset-bottom)+16px)] z-50 mb-12">
+      <div className="fixed left-0 right-0 bottom-[calc(env(safe-area-inset-bottom))] z-50 mb-12">
         <div className="w-full max-w-[402px] mx-auto px-8">
           <button
             className={[

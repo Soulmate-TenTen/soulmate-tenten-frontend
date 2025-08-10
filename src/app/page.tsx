@@ -44,11 +44,13 @@ export default function HomePage() {
           선택을 함께했어요!
         </div>
 
-        <div className=" relative flex flex-col items-center justify-center">
+        <div className="relative flex flex-col items-center justify-center">
           {/* 말풍선 */}
-          <div className="absolute inset-0 flex items-center justify-center px-6">
-            <span className="text-[14px] leading-none text-[#343434] font-semibold whitespace-nowrap">오늘은 {formatted}이에요.</span>
-            <Image className="ml-[-10%]" src="/home-chat.svg" width={233} height={63} alt={`오늘은 ${formatted}이에요.`} />
+          <div className="relative w-[233px] h-[63px] mx-auto">
+            <Image src="/home-chat.svg" alt="" fill className="object-contain pointer-events-none select-none" priority />
+            <div className="absolute left-0 right-0 top-0 bottom-[14px] flex items-center justify-center px-6">
+              <span className="text-[14px] leading-[1.2] text-[#343434] font-semibold whitespace-nowrap">오늘은 {formatted}이에요.</span>
+            </div>
           </div>
 
           {/* 캐릭터 */}
@@ -59,8 +61,8 @@ export default function HomePage() {
         <div className="w-full flex justify-between items-center gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
           <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
           <div>
-            <p className="font-bold">오늘은 어떤 선택이 있으신가요?</p>
-            <p className="text-[12px] mt-1">틀린 선택은 없어요. 저와 함께 이야기해봐요.</p>
+            <p className="font-bold">오늘 어떤 선택이 있나요?</p>
+            <p className="text-[12px] mt-1">저와 함께 이야기해봐요!</p>
           </div>
           <Image src="/right-arrow.svg" width={20} height={20} alt="오른쪽 화살표" />
         </div>

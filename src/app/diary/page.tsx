@@ -42,12 +42,11 @@ export default function DiaryPage() {
     setSelectedDate(new Date(newSelectedDate));
   }, [day, month, year]);
 
-  console.log(data);
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex flex-col grow items-center">
-        {/* 캘린더 날짜 */}
-        <div className="flex gap-4 mt-2 mb-6">
+    <div className="h-[calc(100dvh)] flex flex-col overflow-hidden">
+      <div className="flex-1 min-h-0 flex flex-col">
+        {/* 상단 헤더 */}
+        <div className="flex gap-4 mt-2 mb-6 justify-center items-center">
           <Image
             src="/calendar-l-arrow.svg"
             className="cursor-pointer"
@@ -70,10 +69,12 @@ export default function DiaryPage() {
         </div>
 
         {/* 캘린더 */}
-        <DiaryCalendar year={year} month={month} selectedDate={selectedDate} onSelect={setDay} />
+        <div className="shrink-0">
+          <DiaryCalendar year={year} month={month} selectedDate={selectedDate} onSelect={setDay} />
+        </div>
 
         {/* 하단 */}
-        <div className="flex flex-col grow w-full justify-end">
+        <div className="flex-1 min-h-0 w-full">
           {isLoading ? null : !data || data.length === 0 ? (
             <DiaryEmpty />
           ) : (

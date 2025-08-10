@@ -11,9 +11,9 @@ import DiarySave from "../_components/DiarySave";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const queryClient = useQueryClient();
-
   const { id } = use(params);
   const router = useRouter();
+
   const [select, setSelect] = useState<null | "A" | "B">(null);
   const [review, setReview] = useState("");
   const [showSaveComponent, setShowSaveComponent] = useState(false);
@@ -21,22 +21,13 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const { mutate: saveRoad } = useSaveRoad();
   const { selectedDate } = useDiaryStore();
 
-  const goBack = () => {
-    router.back();
-  };
-
-  const goChat = () => {
-    router.push(`/chat/${id}`);
-  };
+  const goBack = () => router.back();
+  const goChat = () => router.push(`/chat/${id}`);
 
   const save = () => {
     if (!select) return;
     saveRoad(
-      {
-        id: +id,
-        result: select,
-        review,
-      },
+      { id: +id, result: select, review },
       {
         onSuccess() {
           queryClient.invalidateQueries({ queryKey: ["roadDetail", id] });
@@ -48,29 +39,22 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   };
 
   useEffect(() => {
-    if (data?.review) {
-      setReview(data.review);
-    }
-
-    if (data) {
-      if (data.result) {
-        setSelect(data.result as "A" | "B");
-      }
-    }
+    if (data?.review) setReview(data.review);
+    if (data?.result) setSelect(data.result as "A" | "B");
   }, [data]);
 
-  if (showSaveComponent) {
-    return <DiarySave />;
-  }
+  if (showSaveComponent) return <DiarySave />;
 
   return (
-    <div className="mt-4 flex flex-col min-h-screen justify-between content-center mx-4">
-      <div>
+    // 1) 화면 전체 컨테이너: 바디 스크롤 막고 내부에서만 스크롤
+    <div className="relative min-h-[100dvh] overflow-hidden">
+      {/* 2) 스크롤되는 본문. 하단 고정 버튼 높이만큼 패딩 확보 */}
+      <div className="h-full overflow-y-auto px-4 pt-4 pb-[calc(140px+env(safe-area-inset-bottom))]" style={{ WebkitOverflowScrolling: "touch" }}>
         {/* 헤더 */}
         <div className="mb-10 flex justify-between items-center">
           <Image src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={goBack} />
           <p className="font-semibold">{selectedDate}</p>
-          <div></div>
+          <div />
         </div>
 
         {/* 기로 내용 */}
@@ -99,7 +83,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
         {/* 회고 */}
         {select && (
-          <div>
+          <div className="mb-4">
             <p className="mb-5 font-semibold">회고</p>
             <textarea
               value={review}
@@ -111,18 +95,23 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         )}
       </div>
 
-      {/* 버튼 */}
-      <div className="flex flex-col gap-3 mb-6 font-bold">
-        <button
-          style={{ backgroundColor: select ? "#FFFBC0" : "#6C6C6C" }}
-          className="text-[#000414] w-full rounded-full py-4 font-bold"
-          onClick={save}
-        >
-          저장하기
-        </button>
-        <button className="text-white rounded-full w-full py-4 border border-[#4E4E4E] font-bold" onClick={goChat}>
-          대화 보러가기
-        </button>
+      {/* 3) 하단 고정 버튼 두 개 (fixed) */}
+      <div
+        className="
+          fixed inset-x-0 bottom-0 z-50
+          pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]
+        "
+      >
+        <div className="max-w-md mx-auto px-4">
+          <div className="flex flex-col gap-3 font-bold">
+            <button style={{ backgroundColor: select ? "#FFFBC0" : "#6C6C6C" }} className="text-[#000414] w-full rounded-full py-4" onClick={save}>
+              저장하기
+            </button>
+            <button className="text-white rounded-full w-full py-4 border border-[#4E4E4E] bg-[#000414]" onClick={goChat}>
+              대화 보러가기
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
