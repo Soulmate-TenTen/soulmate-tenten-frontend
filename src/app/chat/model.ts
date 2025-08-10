@@ -105,15 +105,16 @@ export function useScrollToBottom(
 }
 
 export function useInitChat(mode: Mode) {
-  const { clearMessages } = useChatStore.getState();
+  const { resetStore } = useChatStore.getState();
   const { data: session } = useSession();
 
   useEffect(() => {
-    clearMessages();
+    resetStore();
     return () => {
+      resetStore();
       if (mode === Mode.CHAT) {
         resetChatMemory(Number(session?.user?.id));
       }
     }
-  }, [clearMessages, mode, session?.user?.id]);
+  }, [mode, session?.user?.id]);
 }

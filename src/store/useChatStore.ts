@@ -14,8 +14,8 @@ interface ChatStore {
   addMessage: (message: ChatMessage) => void;
   updateLastMessage: (content: string) => void;
   setIsLoading: (loading: boolean) => void;
-  clearMessages: () => void;
   setRoadId: (roadId: number) => void;
+  resetStore: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -54,6 +54,10 @@ export const useChatStore = create<ChatStore>((set) => ({
   
   setIsLoading: (loading) => set({ isLoading: loading }),
   
-  clearMessages: () => set({ messages: [INITIAL_MESSAGE] }),
   setRoadId: (roadId: number) => set({ roadId }),
+  resetStore: () => set({ 
+    messages: [INITIAL_MESSAGE], 
+    isLoading: false, 
+    roadId: 0 
+  }),
 }));
