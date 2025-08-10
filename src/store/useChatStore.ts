@@ -10,18 +10,22 @@ interface ChatStore {
   messages: ChatMessage[];
   isLoading: boolean;
   roadId: number;
+  abortController: AbortController | null;
   setMessages: (messages: ChatMessage[]) => void;
   addMessage: (message: ChatMessage) => void;
   updateLastMessage: (content: string) => void;
   setIsLoading: (loading: boolean) => void;
   setRoadId: (roadId: number) => void;
   resetStore: () => void;
+  setAbortController: (controller: AbortController | null) => void;
+  abortCurrentRequest: () => void;
 }
 
-export const useChatStore = create<ChatStore>((set) => ({
+export const useChatStore = create<ChatStore>((set, get) => ({
   messages: [INITIAL_MESSAGE],
   isLoading: false,
   roadId: 0,
+  abortController: null,
   setMessages: (messages) => set({ messages }),
   addMessage: (message) => set((state) => ({
     messages: [...state.messages, message]
@@ -55,9 +59,21 @@ export const useChatStore = create<ChatStore>((set) => ({
   setIsLoading: (loading) => set({ isLoading: loading }),
   
   setRoadId: (roadId: number) => set({ roadId }),
+  
+  setAbortController: (controller) => set({ abortController: controller }),
+  
+  abortCurrentRequest: () => {
+    const state = get();
+    if (state.abortController) {
+      state.abortController.abort();
+      set({ abortController: null });
+    }
+  },
+  
   resetStore: () => set({ 
     messages: [INITIAL_MESSAGE], 
     isLoading: false, 
-    roadId: 0 
+    roadId: 0,
+    abortController: null
   }),
 }));

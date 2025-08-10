@@ -34,7 +34,11 @@ export function useResizeInput(
 
 /* 채팅 호출 함수 */
 export async function invoke(memberId: number, question: string, useStream: boolean): Promise<void> {
-  const { addMessage, updateLastMessage, setIsLoading, setRoadId } = useChatStore.getState();
+  const { addMessage, updateLastMessage, setIsLoading, setRoadId, setAbortController, abortCurrentRequest } = useChatStore.getState();
+
+  abortCurrentRequest(); // 기존 요청 중단 
+  const controller = new AbortController(); // 새로운 AbortController 생성
+  setAbortController(controller);
 
   const userMessage: ChatMessage = {
     role: 'user',
@@ -51,44 +55,49 @@ export async function invoke(memberId: number, question: string, useStream: bool
   addMessage(assistantMessage);
 
   if (useStream) {
-  return await fetchEventSource('/api/chatting/sse/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'text/event-stream',
-      'x-api-route': 'true'
-    },
-    body: JSON.stringify({
-      question: question,
-      memberId: memberId
-    }),
-    async onmessage(event) {
-      if (event.data && event.data !== '[DONE]') {
-        try {
-          const parsed = JSON.parse(event.data);
-          if (parsed.message && parsed.message.content) {
-            const content = parsed.message.content;
-            await delay(30);
-            updateLastMessage(content);
+    return await fetchEventSource('/api/chatting/sse/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'text/event-stream',
+        'x-api-route': 'true'
+      },
+      body: JSON.stringify({
+        question: question,
+        memberId: memberId
+      }),
+      signal: controller.signal, // AbortController signal 추가
+      async onmessage(event) {
+        if (event.data && event.data !== '[DONE]') {
+          try {
+            const parsed = JSON.parse(event.data);
+            if (parsed.message && parsed.message.content) {
+              const content = parsed.message.content;
+              await delay(30);
+              updateLastMessage(content);
+            }
+          } catch (error) {
+            console.error('Failed to parse streaming data:', error);
           }
-        } catch (error) {
-          console.error('Failed to parse streaming data:', error);
         }
-      }
-    },
-    onerror(err) {
-      console.error('Chat API Error:', err);
-      setIsLoading(false);
-    },
-    onclose() {
-      setIsLoading(false);
+      },
+      onerror(err) {
+        console.error('Chat API Error:', err);
+        setIsLoading(false);
+      },
+      onclose() {
+        setIsLoading(false);
       },
     });
   } else {
-    const response = await chat(memberId, question);
-    updateLastMessage(response.message);
-    setRoadId(response.roadId);
-    setIsLoading(false);
+    try {
+      const response = await chat(memberId, question, controller.signal); // signal 전달
+      updateLastMessage(response.message);
+      setRoadId(response.roadId);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   }
 }
 
@@ -105,13 +114,14 @@ export function useScrollToBottom(
 }
 
 export function useInitChat(mode: Mode) {
-  const { resetStore } = useChatStore.getState();
+  const { resetStore, abortCurrentRequest } = useChatStore.getState();
   const { data: session } = useSession();
 
   useEffect(() => {
     resetStore();
+    
     return () => {
-      resetStore();
+      abortCurrentRequest();
       if (mode === Mode.CHAT) {
         resetChatMemory(Number(session?.user?.id));
       }

@@ -1,9 +1,11 @@
 import { http } from "@/lib/http";
 
-export async function chat(memberId: number, question: string) {
+export async function chat(memberId: number, question: string, signal?: AbortSignal) {
     const response = await http.post(`/api/chatting/api/send`, {
         memberId,
         question,
+    }, {
+        signal
     });
     return response.data;
 }
