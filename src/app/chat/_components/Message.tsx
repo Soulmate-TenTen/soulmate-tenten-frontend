@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import characterSvg from '@/assets/images/character.svg';
 import { useChatStore } from '@/store/useChatStore';
@@ -11,6 +11,19 @@ const Message: React.FC<ChatMessage> = ({
   isLastMessage,
 }) => {
   const { isLoading } = useChatStore();
+  const [loadingText, setLoadingText] = useState('답변 생성중...');
+
+  useEffect(() => {
+    if (isLastMessage && isLoading) {
+      const timer = setTimeout(() => {
+        setLoadingText('보고서 생성중...');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setLoadingText('답변 생성중...');
+    }
+  }, [isLastMessage, isLoading]);
 
   return (
     <div className={`flex ${role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
@@ -39,7 +52,7 @@ const Message: React.FC<ChatMessage> = ({
             borderColor: role === 'user' ? '#4E4E4E' : 'transparent',
           }}
         >
-          {isLastMessage && isLoading ? '답변 생성중...' : <Markdown text={content[0].text} />}
+          {isLastMessage && isLoading ? loadingText : <Markdown text={content[0].text} />}
         </div>
       </div>
     </div>
