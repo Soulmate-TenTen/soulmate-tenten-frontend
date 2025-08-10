@@ -12,7 +12,7 @@ export default function Header({ title, showBackButton = true }: HeaderProps) {
     const router = useRouter();
 
     return (
-        <header className="sticky h-[32px] mb-[13px] mt-[13px] top-0 z-50 flex items-center justify-between px-5 py-4">
+        <header className="bg-[#000414] sticky h-[32px] mb-[13px] mt-[13px] top-0 z-50 flex items-center justify-between px-5 py-4">
             {showBackButton ? (
                 <Image 
                     className="cursor-pointer" 
