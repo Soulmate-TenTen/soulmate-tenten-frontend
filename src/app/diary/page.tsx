@@ -74,9 +74,11 @@ export default function DiaryPage() {
         </div>
 
         {/* 하단 */}
-        <div className="flex-1 min-h-0 w-full">
+        <div className="flex-1 min-h-0 w-full flex flex-col">
           {isLoading ? null : !data || data.length === 0 ? (
-            <DiaryEmpty />
+            <div className="mt-auto m-4">
+              <DiaryEmpty />
+            </div>
           ) : (
             <DiaryList
               diaryList={data || []}
