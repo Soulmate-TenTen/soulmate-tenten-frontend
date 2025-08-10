@@ -12,23 +12,29 @@ export default function Header({ title, showBackButton = true }: HeaderProps) {
     const router = useRouter();
 
     return (
-        <header className="bg-[#000414] sticky h-[32px] mb-[13px] mt-[13px] top-0 z-50 flex items-center justify-between px-5 py-4">
-            {showBackButton ? (
-                <Image 
-                    className="cursor-pointer" 
-                    src="/back-icon.svg" 
-                    width={32} 
-                    height={32} 
-                    alt="뒤로" 
-                    onClick={() => router.back()} 
+        <div className="bg-[#000414] pt-[13px] pb-[13px] sticky top-0 z-50">
+            <header className="h-[32px] flex items-center justify-between px-5 py-4">
+                {showBackButton ? (
+                <Image
+                    className="cursor-pointer"
+                    src="/back-icon.svg"
+                    width={32}
+                    height={32}
+                    alt="뒤로"
+                    onClick={() => router.back()}
                 />
-            ) : (
+                ) : (
                 <div className="w-8"></div>
-            )}
-            {title && (
-                <h1 className="text-[#FFFFF6] font-semibold text-base leading-[1.44] text-center flex-1">{title}</h1>
-            )}
-            <div className="w-8"></div>
-        </header>
+                )}
+
+                {title && (
+                <h1 className="text-[#FFFFF6] font-semibold text-base leading-[1.44] text-center flex-1">
+                    {title}
+                </h1>
+                )}
+
+                <div className="w-8"></div>
+            </header>
+        </div>
     );
 }
