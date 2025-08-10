@@ -3,7 +3,7 @@ import { ChatMessage } from '@/app/chat/type';
 
 const INITIAL_MESSAGE: ChatMessage = {
   role: 'assistant',
-  content: [{ type: 'text', text: "반가워요! 이렇게 시작해보세요\n\n1. 지금 처한 상황을 간단히 설명해주세요.\n\n2. 고민되는 선택지나 조건을 알려주세요.\n\n3. SOULMATE가 함께 분석하고, 당신만의 답을 찾아드립니다.  \n\n선택은 혼자 하는 게 아니에요.\n오늘, 당신의 고민을 함께 들어줄게요" }]
+  content: [{ type: 'text', text: "반가워요! 이렇게 시작해보세요.\n\n1. 지금 처한 상황을 간단히 설명해주세요.\n\n2. 고민되는 선택지나 조건을 알려주세요.\n\n3. SOULMATE가 함께 분석하고, 당신만의 답을 찾아드립니다.  \n\n선택은 혼자 하는 게 아니에요.\n오늘, 당신의 고민을 함께 들어줄게요." }]
 };
 
 interface ChatStore {
