@@ -46,10 +46,11 @@ export default function HomePage() {
 
         <div className=" relative flex flex-col items-center justify-center">
           {/* 말풍선 */}
-          <div className="relative">
-            <div className="absolute mt-3.5 ml-2 text-[14px] text-[#343434] font-semibold">오늘은 {formatted}이에요.</div>
+          <div className="absolute inset-0 flex items-center justify-center px-6">
+            <span className="text-[14px] leading-none text-[#343434] font-semibold whitespace-nowrap">오늘은 {formatted}이에요.</span>
             <Image className="ml-[-10%]" src="/home-chat.svg" width={233} height={63} alt={`오늘은 ${formatted}이에요.`} />
           </div>
+
           {/* 캐릭터 */}
           <Image className="ml-[40%] mt-10 [animation:swayX_2s_ease-in-out_infinite]" src="/home-char.svg" width={158} height={146} alt="캐릭터" />
         </div>
