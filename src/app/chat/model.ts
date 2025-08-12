@@ -126,5 +126,5 @@ export function useInitChat(mode: Mode) {
         resetChatMemory(Number(session?.user?.id));
       }
     }
-  }, [mode, session?.user?.id]);
+  }, [session?.user?.id]);
 }

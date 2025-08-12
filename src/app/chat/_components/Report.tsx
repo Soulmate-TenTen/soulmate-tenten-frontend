@@ -31,7 +31,7 @@ export default function ReportPage() {
       setReport(res);
     };
     fetchReport();
-  }, [roadId]);
+  }, []);
 
   useEffect(() => {
     if (expandedA) {
