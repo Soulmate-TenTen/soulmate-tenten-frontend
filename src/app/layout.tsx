@@ -6,6 +6,7 @@ import "@/app/globals.css";
 import Head from "./head";
 import QueryClientProvider from "./QueryClientProvider";
 import NextAuthProvider from "./NextAuthProvider";
+import { LoadingProvider } from "./LoadingProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,10 +24,12 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <NextAuthProvider>
           <QueryClientProvider>
-            <div className="mx-auto flex max-w-[402px] flex-col bg-[#000414] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-              {children}
-            </div>
-            <ReactQueryDevtools />
+            <LoadingProvider>
+              <div className="mx-auto flex max-w-[402px] flex-col bg-[#000414] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+                {children}
+              </div>
+              <ReactQueryDevtools />
+            </LoadingProvider>
           </QueryClientProvider>
         </NextAuthProvider>
       </body>

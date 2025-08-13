@@ -7,10 +7,11 @@ import {
   DialogTitle, 
   DialogDescription
 } from "@/components/Dialog"
-import { unsubscribe } from "../model"
+import { useUnsubscribe } from "../model";
 
 export default function UnsubscribeDialog() {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate: unsubscribe } = useUnsubscribe();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -40,7 +41,7 @@ export default function UnsubscribeDialog() {
             더 써볼래요
           </button>
           <button 
-            onClick={unsubscribe}
+            onClick={() => unsubscribe()}
             className="bg-background text-foreground cursor-pointer flex-1 h-[42px] rounded-[4px] font-bold text-[16px] leading-[1.4] bg-[#FFFFF6] transition-all duration-200"
           >
             떠날래요
