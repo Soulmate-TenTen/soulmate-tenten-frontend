@@ -5,9 +5,10 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { signOut, useSession } from "next-auth/react";
-import { getCount, deleteUser, unsubscribeKakao } from "./api";
+import { getCount } from "./api";
 import { useRouter } from "next/navigation";
 import { useStepFormStore } from "@/store/useStepFormStore";
+import UnsubscribeDialog from "./_components/UnsubscribeDialog";
 
 export default function MyPage() {
   const router = useRouter();
@@ -16,12 +17,6 @@ export default function MyPage() {
   const { reset, goNext } = useStepFormStore();
 
   const handleLogout = () => {
-    signOut({ callbackUrl: "/login" });
-  };
-
-  const handleWithdrawal = async () => {
-    await unsubscribeKakao();
-    await deleteUser();
     signOut({ callbackUrl: "/login" });
   };
 
@@ -93,12 +88,7 @@ export default function MyPage() {
             </button>
           </div>
           <div className="border-b border-[#252525] transition-all duration-200">
-            <button
-              onClick={handleWithdrawal}
-              className="text-[#FFFFF6] font-normal hover:font-bold text-base text-left w-full py-5 px-1 hover:text-[#FFFFFF] hover:bg-[#1A1A1A]/30 rounded-md transition-all duration-200 ease-in-out cursor-pointer"
-            >
-              회원탈퇴
-            </button>
+            <UnsubscribeDialog />
           </div>
         </div>
       </div>
