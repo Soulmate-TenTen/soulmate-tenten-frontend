@@ -19,7 +19,7 @@ export default function ChatInput() {
 
   const handleSend = () => {
     if (input.trim() === "" || !session?.user?.id) return;
-    invoke(Number(session.user.id), input, false);
+    invoke(Number(session.user.id), input);
     setInput("");
   };
 

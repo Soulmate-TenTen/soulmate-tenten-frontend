@@ -33,7 +33,7 @@ export function useResizeInput(
 }
 
 /* 채팅 호출 함수 */
-export async function invoke(memberId: number, question: string, useStream: boolean): Promise<void> {
+export async function invoke(memberId: number, question: string, useStream: boolean=true): Promise<void> {
   const { addMessage, updateLastMessage, setIsLoading, setRoadId, setAbortController, abortCurrentRequest } = useChatStore.getState();
 
   abortCurrentRequest(); // 기존 요청 중단 
@@ -68,16 +68,31 @@ export async function invoke(memberId: number, question: string, useStream: bool
       }),
       signal: controller.signal, // AbortController signal 추가
       async onmessage(event) {
-        if (event.data && event.data !== '[DONE]') {
-          try {
-            const parsed = JSON.parse(event.data);
-            if (parsed.message && parsed.message.content) {
-              const content = parsed.message.content;
-              await delay(30);
-              updateLastMessage(content);
+        if (event.data) {
+          /* 리포트 메시지 처리 */
+          if (event.data.startsWith('REPORT')) {
+            updateLastMessage('REPORT');
+          } else if (event.data.startsWith('roadId :')) {
+            const roadId = event.data.split(':')[1]?.trim();
+            setRoadId(Number(roadId));
+          } else {
+            /* 채팅 메시지 스트림 처리 (event.data format example)
+              data:id:39a13b0f-a2ed-4780-bd3a-4405f710db17
+              data:event:token
+              data:data:{"message":{"role":"assistant","content":"요즘"},"finishReason":null,"created":1755269271,"seed":2821919132,"usage":null}
+            */
+            const lines = event.data.split('\n');
+            for (const line of lines) {
+              if (line.startsWith('data:')) {
+                const jsonData = line.substring(5); // 'data:' 제거
+                const parsed = JSON.parse(jsonData);
+                if (parsed.message && parsed.message.content) {
+                  const content = parsed.message.content;
+                  await delay(30);
+                  updateLastMessage(content);
+                }
+              }
             }
-          } catch (error) {
-            console.error('Failed to parse streaming data:', error);
           }
         }
       },
