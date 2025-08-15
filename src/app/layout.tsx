@@ -25,7 +25,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <QueryClientProvider>
             <LoadingProvider>
-              <div className="mx-auto flex max-w-[402px] flex-col bg-[#000414] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+              <div className="mx-auto flex w-screen max-w-[402px] flex-col bg-[#000414] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
                 {children}
               </div>
               <ReactQueryDevtools />
