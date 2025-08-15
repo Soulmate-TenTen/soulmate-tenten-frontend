@@ -3,7 +3,7 @@ export default function Head() {
   const description =
     "SOULMATE는 AI와 함께 고민을 분석하고 회고를 기록해 후회 없는 더 나은 결정을 내릴 수 있도록 돕는 서비스입니다. SOULMATE는 언제나 당신의 선택을 지원합니다.";
   const url = "https://soulmate-tenten-frontend.vercel.app";
-  const thumbnail = "/thumbnail.png";
+  const thumbnail = "https://soulmate-tenten-frontend.vercel.app/thumbnail.png";
 
   return (
     <>
