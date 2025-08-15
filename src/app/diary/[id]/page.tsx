@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import DiarySave from "../_components/DiarySave";
 import { parseProverb } from "@/hooks/useProverb";
+import { motion } from "motion/react";
+import PageTransition from "@/components/PageTransition";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const queryClient = useQueryClient();
@@ -47,27 +49,41 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   if (showSaveComponent) return <DiarySave />;
 
   return (
-    // 1) 화면 전체 컨테이너: 바디 스크롤 막고 내부에서만 스크롤
-    <div className="relative min-h-[100dvh] overflow-hidden">
+    <PageTransition className="relative min-h-[100dvh] overflow-hidden">
       {/* 2) 스크롤되는 본문. 하단 고정 버튼 높이만큼 패딩 확보 */}
       <div className="h-full overflow-y-auto px-4 pt-4 pb-[calc(140px+env(safe-area-inset-bottom))]" style={{ WebkitOverflowScrolling: "touch" }}>
         {/* 헤더 */}
-        <div className="mb-10 flex justify-between items-center">
+        <motion.div 
+          className="mb-10 flex justify-between items-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <Image src="/back-icon.svg" width={32} height={32} alt="뒤로" onClick={goBack} />
           <p className="font-semibold">{selectedDate}</p>
           <div />
-        </div>
+        </motion.div>
 
         {/* 기로 내용 */}
-        <div className="bg-white text-black rounded-xl p-7 mb-3">
+        <motion.div 
+          className="bg-white text-black rounded-xl p-7 mb-3"
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           <p className="mb-4 font-ChungjuKimSaeng text-center">{data?.conclusionTitle}</p>
           <p className="text-[13px]">
             {data?.conclusion ? parseProverb(data.conclusion) : ''}
           </p>
-        </div>
+        </motion.div>
 
         {/* 기로 선택 버튼 */}
-        <div className="flex gap-2 mb-12">
+        <motion.div 
+          className="flex gap-2 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        >
           <button
             style={{ backgroundColor: select === "A" ? "#FFFBC0" : "#1C1C1C", color: select === "A" ? "black" : "white" }}
             className="rounded-full w-full py-4 font-bold"
@@ -82,11 +98,16 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           >
             B {data?.titleB}
           </button>
-        </div>
+        </motion.div>
 
         {/* 회고 */}
         {select && (
-          <div className="mb-4">
+          <motion.div 
+            className="mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          >
             <p className="mb-5 font-semibold">회고</p>
             <textarea
               value={review}
@@ -94,16 +115,19 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
               className="text-black w-full resize-none bg-white rounded-xl h-[145px] placeholder-[#A5A5A5] p-4"
               placeholder="그 선택이 어떤 변화를 만들어냈나요?"
             />
-          </div>
+          </motion.div>
         )}
       </div>
 
       {/* 3) 하단 고정 버튼 두 개 (fixed) */}
-      <div
+      <motion.div
         className="
           fixed inset-x-0 bottom-0 z-50
           pt-3 pb-[calc(12px+env(safe-area-inset-bottom))]
         "
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
       >
         <div className="max-w-md mx-auto px-4">
           <div className="flex flex-col gap-3 font-bold">
@@ -115,7 +139,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </PageTransition>
   );
 }

@@ -9,6 +9,8 @@ import { getCount } from "./api";
 import { useRouter } from "next/navigation";
 import { useStepFormStore } from "@/store/useStepFormStore";
 import UnsubscribeDialog from "./_components/UnsubscribeDialog";
+import { motion } from "motion/react";
+import PageTransition from "@/components/PageTransition";
 
 export default function MyPage() {
   const router = useRouter();
@@ -31,12 +33,29 @@ export default function MyPage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header showBackButton={false} />
+    <PageTransition className="flex flex-col min-h-screen">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Header showBackButton={false} />
+      </motion.div>
+      
       <div className="flex-1 mr-[32px] ml-[32px]">
-        <div className="bg-[#FFFFF6] rounded-xl p-6 mb-8 shadow-sm">
+        <motion.div 
+          className="bg-[#FFFFF6] rounded-xl p-6 mb-8 shadow-sm"
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           <div className="flex items-center gap-4">
-            <div className="w-[69px] h-[69px] bg-[#D9D9D9] rounded-full overflow-hidden shadow-inner">
+            <motion.div 
+              className="w-[69px] h-[69px] bg-[#D9D9D9] rounded-full overflow-hidden shadow-inner"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+            >
               {session?.user?.image ? (
                 <Image 
                   src={session.user.image} 
@@ -51,18 +70,29 @@ export default function MyPage() {
                   <span className="text-[#6C6C6C] text-sm font-medium">프로필</span>
                 </div>
               )}
-            </div>
-            <div className="flex-1">
+            </motion.div>
+            <motion.div 
+              className="flex-1"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+            >
               <h2 className="text-[#000414] font-bold mb-1 leading-tight">
                 {session?.user?.name}님의 선택을 응원합니다!
               </h2>
               <p className="text-[#6C6C6C] text-sm font-medium">
                 함께한 선택 <span className="font-semibold text-[#5A5A5A]">{count}개</span>
               </p>
-            </div>
+            </motion.div>
           </div>
-        </div>
-        <div className="space-y-0">
+        </motion.div>
+        
+        <motion.div 
+          className="space-y-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+        >
           <div className="border-b border-[#252525] transition-all duration-200">
             <button 
               onClick={handleOnboardingClick} 
@@ -90,17 +120,23 @@ export default function MyPage() {
           <div className="border-b border-[#252525] transition-all duration-200">
             <UnsubscribeDialog />
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className="text-center mb-[70px] mt-8">
+      
+      <motion.div 
+        className="text-center mb-[70px] mt-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+      >
         <button
           onClick={handleLogout}
           className="text-[#919191] hover:text-[#B8B8B8] text-sm font-normal hover:font-bold underline underline-offset-2 hover:underline-offset-4 transition-all duration-200 ease-in-out cursor-pointer"
         >
           로그아웃
         </button>
-      </div>
+      </motion.div>
       <Footer />
-    </div>
+    </PageTransition>
   );
 }
