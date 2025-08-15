@@ -92,7 +92,10 @@ export default function HomePage() {
           <div ref={containerRef} className="w-full mb-4">
             {width > 0 && (
               <ScratchCard {...settings}>
-                <div className="w- full h-full flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center" style={{}}>
+                <div
+                  className="w- full h-full rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center"
+                  style={{}}
+                >
                   <h1 className="text-[#000414] font-bold text-center">
                     돌다리도 두들겨 보고 건너는게 필요해요.
                     <br />
