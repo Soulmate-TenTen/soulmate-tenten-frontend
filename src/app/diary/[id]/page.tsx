@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import DiarySave from "../_components/DiarySave";
+import { parseProverb } from "@/hooks/useProverb";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const queryClient = useQueryClient();
@@ -59,8 +60,10 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
         {/* 기로 내용 */}
         <div className="bg-white text-black rounded-xl p-7 mb-3">
-          <p className="font-bold mb-4">{data?.conclusionTitle}</p>
-          <p className="text-[13px]">{data?.conclusion}</p>
+          <p className="mb-4 font-ChungjuKimSaeng text-center">{data?.conclusionTitle}</p>
+          <p className="text-[13px]">
+            {data?.conclusion ? parseProverb(data.conclusion) : ''}
+          </p>
         </div>
 
         {/* 기로 선택 버튼 */}

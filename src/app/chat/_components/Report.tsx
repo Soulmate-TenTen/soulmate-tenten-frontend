@@ -7,6 +7,7 @@ import { useChatStore } from "@/store/useChatStore";
 import { useRouter } from "next/navigation";
 import { ShortButton } from "@/components/buttons";
 import Markdown from "@/components/Markdown";
+import { parseProverb } from "@/hooks/useProverb";
 
 export default function ReportPage() {
   const router = useRouter();
@@ -69,8 +70,8 @@ export default function ReportPage() {
       <div className="flex-1 px-8 overflow-y-auto min-h-0">
         {/* Analysis Result */}
         <div className="bg-[#FFFFF6] rounded-lg p-4 mb-3">
-          <h3 className="text-[#000414] text-base font-bold mb-3">{report.conclusionTitle}</h3>
-          <p className="text-[#000414] text-sm leading-relaxed">{report.conclusion}</p>
+          <h3 className="text-[#000414] text-base mb-3 font-ChungjuKimSaeng text-center">{report.conclusionTitle}</h3>
+          <p className="text-[#000414] text-sm leading-relaxed">{parseProverb(report.conclusion)}</p>
         </div>
 
         {/* Option A */}
