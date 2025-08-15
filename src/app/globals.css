@@ -27,6 +27,30 @@
   font-display: swap;
 }
 
+/* ChungjuKimSaeng 폰트 정의 */
+@font-face {
+  font-family: 'ChungjuKimSaeng';
+  src: url('/fonts/ChungjuKimSaengTTF.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pretendard 폰트 강제 적용 */
+.font-Pretendard {
+  font-family: 'Pretendard', sans-serif !important;
+}
+
+/* SUIT 폰트 강제 적용 */
+.font-SUIT {
+  font-family: 'SUIT', sans-serif !important;
+}
+
+/* ChungjuKimSaeng 폰트 강제 적용 */
+.font-ChungjuKimSaeng {
+  font-family: 'ChungjuKimSaeng', serif !important;
+}
+
 :root {
   --background: #000414; /* 소울메이트 배경색 */
   --foreground: #FFFFF6; /* 소울메이트 폰트색 */
@@ -49,7 +73,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'SUIT', Arial, Helvetica, sans-serif;
+  font-family: 'SUIT'; /* 기본 폰트 SUIT */
 }
 
 /* 커스텀 스크롤바 스타일 */
