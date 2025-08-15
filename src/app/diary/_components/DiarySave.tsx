@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
-import LoadingImg from "@/assets/images/character-save-loading.svg";
+import LoadingImg from "@/assets/images/character-save-loading.png";
 import CompleteImg from "@/assets/images/character-save-complete.svg";
 import { LongButton } from "@/components/buttons";
 
