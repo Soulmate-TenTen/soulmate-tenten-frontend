@@ -14,7 +14,7 @@ import { Mode } from "./type";
 import PageTransition from "@/components/PageTransition";
 
 export default function ChatPage() {
-  const { messages } = useChatStore();
+  const { messages, roadId } = useChatStore();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState(Mode.CHAT);
 
@@ -59,8 +59,9 @@ export default function ChatPage() {
                   isLastMessage={index === messages.filter(m => m.content[0].text !== "REPORT").length - 1}
                 />
               </motion.div>
-            ))}
-          {messages.length > 0 && messages[messages.length - 1].content[0].text === "REPORT" && (
+            ))
+          }
+          {messages.length > 0 && roadId > 0 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -81,7 +82,7 @@ export default function ChatPage() {
       }
 
       {/* 메시지 입력 영역 */}
-      { messages[messages.length -1].content[0].text !== "REPORT" && (mode === Mode.CHAT ? (
+      { roadId === 0 && (mode === Mode.CHAT ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
