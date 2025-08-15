@@ -7,20 +7,20 @@ import title from "../../assets/images/title.svg";
 import character from "../../assets/images/character.gif";
 import { motion } from "motion/react";
 import PageTransition from "@/components/PageTransition";
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
-  const searchParams = useSearchParams();
   const [showError, setShowError] = useState(false);
   
   useEffect(() => {
-    const error = searchParams.get('error');
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    
     if (error === 'session_expired') {
       setShowError(true);
       setTimeout(() => setShowError(false), 3000);
     }
-  }, [searchParams]);
+  }, []);
 
   return (
     <PageTransition className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">

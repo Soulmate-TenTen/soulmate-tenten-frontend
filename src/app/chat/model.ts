@@ -113,6 +113,7 @@ export async function invoke(memberId: number, question: string, useStream: bool
       setRoadId(response.roadId);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       signOut({ callbackUrl: '/login?error=session_expired' });
       setIsLoading(false);
     }

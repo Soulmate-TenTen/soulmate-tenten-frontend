@@ -22,7 +22,7 @@ const Markdown: React.FC<MarkdownProps> = ({ text }) => {
         }
       });
     }
-  }, [text]);
+  }, [text, roadId]);
 
   return (
     <div ref={markdownRef}>
