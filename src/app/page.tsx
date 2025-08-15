@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ScratchCard from "react-scratchcard-v2";
+import { motion } from "motion/react";
+import PageTransition from "@/components/PageTransition";
 
 export default function HomePage() {
   const { data: session } = useSession();
@@ -39,7 +41,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <PageTransition className="flex flex-col min-h-[100dvh]">
       {/* 커스텀 애니메이션 정의 */}
       <style>
         {`
@@ -52,23 +54,37 @@ export default function HomePage() {
 
       <div className="px-6 mt-8 flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
-        <Image src="/logo.svg" width={80} height={10} alt="로고" />
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Image src="/logo.svg" width={80} height={10} alt="로고" />
+        </motion.div>
 
         <div className="flex flex-col gap-3.5 mt-11">
           {/* 그라데이션 텍스트 */}
-          <div
+          <motion.div
             className="font-semibold text-[14px] leading-[140%] bg-clip-text text-transparent"
             style={{
               background: "radial-gradient(373.82% 375.24% at 12.42% 212.5%, #25FBFF 0%, #95EEFC 30.35%, #FFE2F8 59.13%, #84FFC1 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             아직 선택하지 못한 고민들을 알려드려요.
-          </div>
+          </motion.div>
           <div className="flex justify-between">
             {/* 고민 텍스트 */}
-            <div className="grow text-[26px]">
+            <motion.div 
+              className="grow text-[26px]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            >
               {session?.user.name}님,
               <br />
               3일전에 퇴사를
@@ -79,17 +95,36 @@ export default function HomePage() {
                   <Image src="home-right-arrow.svg" width={24} height={24} alt="채팅 바로가기" onClick={goChat} />
                 </span>
               </div>
-            </div>
+            </motion.div>
             {/* 캐릭터 */}
-            <Image className="[animation:swayX_2s_ease-in-out_infinite]" src="/home-char.svg" width={130} height={120} alt="캐릭터" />
+            <motion.div
+              initial={{ opacity: 0, x: 20, scale: 0.8 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            >
+              <Image className="[animation:swayX_2s_ease-in-out_infinite]" src="/home-char.svg" width={130} height={120} alt="캐릭터" />
+            </motion.div>
           </div>
         </div>
 
         <div className="mt-11">
           {/* 복권 텍스트 */}
-          <div className="text-[18px] font-bold mb-6">오늘의 조언 복권을 긁어보세요!</div>
+          <motion.div 
+            className="text-[18px] font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+          >
+            오늘의 조언 복권을 긁어보세요!
+          </motion.div>
           {/* 복권 */}
-          <div ref={containerRef} className="w-full mb-4">
+          <motion.div 
+            ref={containerRef} 
+            className="w-full mb-4"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+          >
             {width > 0 && (
               <ScratchCard {...settings}>
                 <div
@@ -104,7 +139,7 @@ export default function HomePage() {
                 </div>
               </ScratchCard>
             )}
-          </div>
+          </motion.div>
           {/* 팁 */}
           <div className="border border-[#2F2F2F] px-2 py-1 rounded-full text-[12px] font-semibold text-center">
             <span className="font-extrabold text-[#FFFBC0]">TIP</span>&nbsp;&nbsp;&nbsp;처음 선택한 가치관과 기준은 내 정보에서 수정 가능해요!
@@ -122,6 +157,6 @@ export default function HomePage() {
         </div> */}
       </div>
       <Footer />
-    </div>
+    </PageTransition>
   );
 }

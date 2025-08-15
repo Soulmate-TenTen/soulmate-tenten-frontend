@@ -7,6 +7,8 @@ import Image from "next/image";
 import useGetRoadList from "@/hooks/useGetRoadList";
 import DiaryEmpty from "./_components/DiaryEmpty";
 import DiaryList from "./_components/DiaryList";
+import { motion } from "motion/react";
+import PageTransition from "@/components/PageTransition";
 
 const getFormattedDate = (year: number, month: number, day: number) => {
   return `${year}-${month > 9 ? month : `0${month}`}-${day > 9 ? day : `0${day}`}`;
@@ -43,10 +45,15 @@ export default function DiaryPage() {
   }, [day, month, year]);
 
   return (
-    <div className="h-[calc(100dvh)] flex flex-col overflow-hidden">
+    <PageTransition className="h-[calc(100dvh)] flex flex-col overflow-hidden">
       <div className="flex-1 min-h-0 flex flex-col">
         {/* 상단 헤더 */}
-        <div className="flex gap-4 mt-2 mb-6 justify-center items-center">
+        <motion.div 
+          className="flex gap-4 mt-2 mb-6 justify-center items-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <Image
             src="/calendar-l-arrow.svg"
             className="cursor-pointer"
@@ -66,15 +73,25 @@ export default function DiaryPage() {
             alt="다음 달 보기"
             onClick={() => setDate(month + 1)}
           />
-        </div>
+        </motion.div>
 
         {/* 캘린더 */}
-        <div className="shrink-0">
+        <motion.div 
+          className="shrink-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           <DiaryCalendar year={year} month={month} selectedDate={selectedDate} onSelect={setDay} />
-        </div>
+        </motion.div>
 
         {/* 하단 */}
-        <div className="flex-1 min-h-0 w-full flex flex-col">
+        <motion.div 
+          className="flex-1 min-h-0 w-full flex flex-col"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        >
           {isLoading ? null : !data || data.length === 0 ? (
             <div className="mt-auto m-4">
               <DiaryEmpty />
@@ -85,9 +102,15 @@ export default function DiaryPage() {
               selectedDateText={`${selectedDate.getMonth() + 1}월 ${selectedDate.getDate()}일 ${getDay(selectedDate.getDay())}요일`}
             />
           )}
-        </div>
+        </motion.div>
       </div>
-      <Footer />
-    </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+      >
+        <Footer />
+      </motion.div>
+    </PageTransition>
   );
 }
