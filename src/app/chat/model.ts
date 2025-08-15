@@ -99,7 +99,7 @@ export async function invoke(memberId: number, question: string, useStream: bool
         }
       },
       onerror() {
-        signOut({ callbackUrl: '/login' });
+        signOut({ callbackUrl: '/login?error=session_expired' });
         setIsLoading(false);
       },
       onclose() {
@@ -113,7 +113,7 @@ export async function invoke(memberId: number, question: string, useStream: bool
       setRoadId(response.roadId);
       setIsLoading(false);
     } catch (error) {
-      signOut({ callbackUrl: '/login' });
+      signOut({ callbackUrl: '/login?error=session_expired' });
       setIsLoading(false);
     }
   }
