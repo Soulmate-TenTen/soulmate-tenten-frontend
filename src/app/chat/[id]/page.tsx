@@ -30,7 +30,6 @@ export default function ChatPage() {
     getChatHistory(Number(id))
       .then((res) => {
         const chatList = res?.chattingList || [];
-        console.log('채팅 리스트:', chatList);
         
         if (Array.isArray(chatList) && chatList.length > 0) {
           const convertedHistory: ChatMessage[] = chatList
