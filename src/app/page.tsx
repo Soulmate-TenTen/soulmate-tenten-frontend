@@ -10,7 +10,7 @@ import ScratchCard from "react-scratchcard-v2";
 export default function HomePage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
 
   const goChat = () => {
