@@ -8,7 +8,7 @@ declare module "next-auth" {
       name?: string | null
       image?: string | null
       newMemberYn?: string
-      id?: string
+      id?: number
     }
   }
 
@@ -16,7 +16,7 @@ declare module "next-auth" {
     name?: string | null
     image?: string | null
     newMemberYn?: string
-    id?: string
+    id?: number
   }
 }
 
@@ -25,6 +25,6 @@ declare module "next-auth/jwt" {
     accessToken?: string
     refreshToken?: string
     newMemberYn?: string
-    id?: string
+    id?: number
   }
 }

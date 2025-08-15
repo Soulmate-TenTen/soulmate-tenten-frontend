@@ -2,7 +2,7 @@ import NextAuth, { Account, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Kakao from "next-auth/providers/kakao";
 
-const authOptions = {
+const authOptions: any = {
   providers: [
     Kakao({
       clientId: process.env.AUTH_KAKAO_ID!,

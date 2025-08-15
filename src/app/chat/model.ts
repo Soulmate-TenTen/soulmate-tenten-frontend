@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { ChatMessage } from './type';
@@ -97,8 +98,8 @@ export async function invoke(memberId: number, question: string, useStream: bool
           }
         }
       },
-      onerror(err) {
-        console.error('Chat API Error:', err);
+      onerror() {
+        signOut({ callbackUrl: '/login' });
         setIsLoading(false);
       },
       onclose() {
@@ -112,6 +113,7 @@ export async function invoke(memberId: number, question: string, useStream: bool
       setRoadId(response.roadId);
       setIsLoading(false);
     } catch (error) {
+      signOut({ callbackUrl: '/login' });
       setIsLoading(false);
     }
   }
@@ -145,11 +147,10 @@ export function useInitChat(mode: Mode) {
 
   useEffect(() => {
     resetStore();
-    
     return () => {
       abortCurrentRequest();
-      if (mode === Mode.CHAT) {
-        resetChatMemory(Number(session?.user?.id));
+      if (mode === Mode.CHAT && session?.user?.id) {
+        resetChatMemory(session.user.id);
       }
     }
   }, [session?.user?.id]);
