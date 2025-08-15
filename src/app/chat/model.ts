@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { ChatMessage } from './type';
 import { useChatStore } from '../../store/useChatStore';
-import { chat, resetChatMemory } from './api';
+import { chat, resetChatMemory, getChatHistory } from './api';
 import { useSession } from 'next-auth/react';
 import { Mode } from './type';
+import { useQuery } from "@tanstack/react-query";
 
 /* 스트리밍 속도 조절을 위한 유틸리티 함수 */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -115,6 +116,16 @@ export async function invoke(memberId: number, question: string, useStream: bool
     }
   }
 }
+
+/* 대화이력 조회 */
+export const useGetChatHistory = (roadId: number) => {
+  return useQuery({
+    queryKey: ['chatHistory', roadId],
+    queryFn: () => getChatHistory(roadId),
+    enabled: !!roadId, // roadId가 있을 때만 실행
+    staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
+  });
+};
 
 /* 스크롤 훅 */
 export function useScrollToBottom(

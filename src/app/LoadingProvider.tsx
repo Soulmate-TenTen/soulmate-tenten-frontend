@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface LoadingContextType {
@@ -8,8 +8,6 @@ interface LoadingContextType {
 }
 
 const LoadingContext = createContext<LoadingContextType>({ isLoading: false });
-
-export const useLoading = () => useContext(LoadingContext);
 
 export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
