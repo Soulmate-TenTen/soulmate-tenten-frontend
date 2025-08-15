@@ -149,8 +149,8 @@ export function useInitChat(mode: Mode) {
     resetStore();
     return () => {
       abortCurrentRequest();
-      if (mode === Mode.CHAT && session?.user?.id) {
-        resetChatMemory(session.user.id);
+      if (mode === Mode.CHAT) {
+        resetChatMemory(Number(session?.user?.id));
       }
     }
   }, [session?.user?.id]);
