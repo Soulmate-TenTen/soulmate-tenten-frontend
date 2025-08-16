@@ -85,6 +85,7 @@ export async function invoke(memberId: number, question: string, useStream: bool
             */
             const lines = event.data.split('\n');
             for (const line of lines) {
+              if (line.startsWith('event:result')) break;
               if (line.startsWith('data:')) {
                 const jsonData = line.substring(5); // 'data:' 제거
                 const parsed = JSON.parse(jsonData);
