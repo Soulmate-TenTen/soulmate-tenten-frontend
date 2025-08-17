@@ -32,6 +32,6 @@ interface ISaveRoad {
   result: "A" | "B";
   review: string;
 }
-export async function saveRoad({ id, result, review }: ISaveRoad) {
+export async function saveRoad({ id, result, review }: ISaveRoad): Promise<undefined> {
   return await http.patch(`/api/road/saveRoad`, { id, result, review });
 }
