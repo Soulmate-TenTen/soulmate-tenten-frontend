@@ -8,12 +8,14 @@ import { useEffect, useRef, useState } from "react";
 import ScratchCard from "react-scratchcard-v2";
 import { motion } from "motion/react";
 import PageTransition from "@/components/PageTransition";
+import useGetTodayAdvice from "@/hooks/useGetTodayAdvice";
 
 export default function HomePage() {
   const { data: session } = useSession();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
+  const { data: todayAdvice } = useGetTodayAdvice({ memberId: Number(session?.user.id) });
 
   const goChat = () => {
     router.push("/chat");
@@ -40,6 +42,8 @@ export default function HomePage() {
     onComplete: () => console.log("Completed!"),
   };
 
+  console.log(todayAdvice);
+
   return (
     <PageTransition className="flex flex-col min-h-[100dvh]">
       {/* 커스텀 애니메이션 정의 */}
@@ -54,11 +58,7 @@ export default function HomePage() {
 
       <div className="px-6 mt-8 flex-1 flex flex-col justify-between my-5">
         {/* 로고 */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
           <Image src="/logo.svg" width={80} height={10} alt="로고" />
         </motion.div>
 
@@ -79,7 +79,7 @@ export default function HomePage() {
           </motion.div>
           <div className="flex justify-between">
             {/* 고민 텍스트 */}
-            <motion.div 
+            <motion.div
               className="grow text-[26px]"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -109,7 +109,7 @@ export default function HomePage() {
 
         <div className="mt-11">
           {/* 복권 텍스트 */}
-          <motion.div 
+          <motion.div
             className="text-[18px] font-bold mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -118,8 +118,8 @@ export default function HomePage() {
             오늘의 조언 복권을 긁어보세요!
           </motion.div>
           {/* 복권 */}
-          <motion.div 
-            ref={containerRef} 
+          <motion.div
+            ref={containerRef}
             className="w-full mb-4"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -131,11 +131,7 @@ export default function HomePage() {
                   className="w- full h-full rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center"
                   style={{}}
                 >
-                  <h1 className="text-[#000414] font-bold text-center">
-                    돌다리도 두들겨 보고 건너는게 필요해요.
-                    <br />
-                    신중하다고 나쁜 거 없는 하루에요!
-                  </h1>
+                  <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
                 </div>
               </ScratchCard>
             )}
