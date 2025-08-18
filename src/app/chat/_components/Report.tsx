@@ -32,7 +32,7 @@ export default function ReportPage() {
       setReport(res);
     };
     fetchReport();
-  }, []);
+  });
 
   useEffect(() => {
     if (expandedA) {
