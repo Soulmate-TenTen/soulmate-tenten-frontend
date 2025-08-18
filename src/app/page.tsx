@@ -9,6 +9,7 @@ import ScratchCard from "react-scratchcard-v2";
 import { motion } from "motion/react";
 import PageTransition from "@/components/PageTransition";
 import useGetTodayAdvice from "@/hooks/useGetTodayAdvice";
+import useGetRemind from "@/hooks/useGetRemind";
 
 export default function HomePage() {
   const { data: session } = useSession();
@@ -17,9 +18,10 @@ export default function HomePage() {
   const [width, setWidth] = useState(0);
   const [isScratched, setIsScratched] = useState(false);
   const { data: todayAdvice } = useGetTodayAdvice({ memberId: Number(session?.user.id) });
+  const { data: remind } = useGetRemind({ memberId: Number(session?.user.id) });
 
   const getTodayKey = () => {
-    const d = new Date(); // 브라우저 로컬 시간 기준
+    const d = new Date();
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
@@ -30,13 +32,18 @@ export default function HomePage() {
   const msUntilNextMidnight = () => {
     const now = new Date();
     const next = new Date();
-    next.setHours(24, 0, 0, 0); // 다음 자정
+    next.setHours(24, 0, 0, 0);
     return next.getTime() - now.getTime();
   };
 
   const goChat = () => {
-    router.push("/chat");
+    router.push(`/chat/${remind?.roadId}`);
   };
+
+  function getMiddle(text: string) {
+    const m = text.match(/^.*?님\s*(.+?)\s*고민했어요(?:\.)?$/);
+    return m ? m[1].trim() : "";
+  }
 
   useEffect(() => {
     try {
@@ -89,8 +96,6 @@ export default function HomePage() {
     onComplete: handleScratchComplete,
   };
 
-  console.log(todayAdvice);
-
   return (
     <PageTransition className="flex flex-col min-h-[100dvh]">
       {/* 커스텀 애니메이션 정의 */}
@@ -134,7 +139,7 @@ export default function HomePage() {
             >
               {session?.user.name}님,
               <br />
-              3일전에 퇴사를
+              {getMiddle(remind?.title || "")}
               <br />
               <div className="flex gap-8 items-center">
                 <div>고민했어요.</div>

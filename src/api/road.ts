@@ -1,5 +1,5 @@
 import { http } from "@/lib/http";
-import { Road, RoadDetail } from "@/types/diary";
+import { Remind, Road, RoadDetail } from "@/types/diary";
 import { getSession } from "next-auth/react";
 
 interface IGetRoadList {
@@ -34,4 +34,11 @@ interface ISaveRoad {
 }
 export async function saveRoad({ id, result, review }: ISaveRoad): Promise<undefined> {
   return await http.patch(`/api/road/saveRoad`, { id, result, review });
+}
+
+interface IGetRemind {
+  memberId: number;
+}
+export async function getRemind({ memberId }: IGetRemind): Promise<Remind> {
+  return await http.get(`/api/road/remind?memberId=${memberId}`).then((res) => res.data);
 }
