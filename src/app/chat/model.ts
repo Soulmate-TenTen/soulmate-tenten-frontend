@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { ChatMessage } from './type';
 import { useChatStore } from '../../store/useChatStore';
-import { chat, resetChatMemory, getChatHistory } from './api';
+import { chat, resetChatMemory, getChatHistory, createReport } from './api';
 import { useSession } from 'next-auth/react';
 import { Mode } from './type';
 import { useQuery } from "@tanstack/react-query";
@@ -36,7 +36,7 @@ export function useResizeInput(
 
 /* 채팅 호출 함수 */
 export async function invoke(memberId: number, question: string, useStream: boolean=true): Promise<void> {
-  const { addMessage, updateLastMessage, setIsLoading, setRoadId, setAbortController, abortCurrentRequest } = useChatStore.getState();
+  const { addMessage, updateLastMessage, setIsLoading, setRoadId, setAbortController, abortCurrentRequest, removeLastMessage } = useChatStore.getState();
 
   abortCurrentRequest(); // 기존 요청 중단 
   const controller = new AbortController(); // 새로운 AbortController 생성
@@ -73,10 +73,10 @@ export async function invoke(memberId: number, question: string, useStream: bool
         if (event.data) {
           /* 리포트 메시지 처리 */
           if (event.data.startsWith('REPORT')) {
-            updateLastMessage('REPORT');
-          } else if (event.data.startsWith('roadId :')) {
-            const roadId = event.data.split(':')[1]?.trim();
-            setRoadId(Number(roadId));
+            updateLastMessage('보고서 생성중...');
+            const report = await createReport(memberId);
+            setRoadId(Number(report.roadId));
+            removeLastMessage();
           } else {
             /* 채팅 메시지 스트림 처리 (event.data format example)
               data:id:39a13b0f-a2ed-4780-bd3a-4405f710db17
@@ -148,10 +148,12 @@ export function useInitChat(mode: Mode) {
   const { data: session } = useSession();
 
   useEffect(() => {
-    resetStore();
+    if (session?.user?.id) {
+      resetStore();
+    }
     return () => {
       abortCurrentRequest();
-      if (mode === Mode.CHAT) {
+      if (mode === Mode.CHAT && session?.user?.id) {
         resetChatMemory(Number(session?.user?.id));
       }
     }
