@@ -15,11 +15,53 @@ export default function HomePage() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
+  const [isScratched, setIsScratched] = useState(false);
   const { data: todayAdvice } = useGetTodayAdvice({ memberId: Number(session?.user.id) });
+
+  const getTodayKey = () => {
+    const d = new Date(); // 브라우저 로컬 시간 기준
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+  const storageKey = `scratch_${session?.user?.id ?? "guest"}`;
+
+  const msUntilNextMidnight = () => {
+    const now = new Date();
+    const next = new Date();
+    next.setHours(24, 0, 0, 0); // 다음 자정
+    return next.getTime() - now.getTime();
+  };
 
   const goChat = () => {
     router.push("/chat");
   };
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      const parsed = raw ? JSON.parse(raw) : null;
+      const todayKey = getTodayKey();
+      if (parsed?.date === todayKey) {
+        setIsScratched(true);
+      } else {
+        setIsScratched(false);
+      }
+    } catch {
+      setIsScratched(false);
+    }
+
+    const timer = setTimeout(() => {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch {}
+      setIsScratched(false);
+    }, msUntilNextMidnight());
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.id]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -34,12 +76,17 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleScratchComplete = () => {
+    setIsScratched(true);
+    localStorage.setItem(storageKey, JSON.stringify({ date: getTodayKey() }));
+  };
+
   const settings = {
     width,
     height: 160, // 필요에 맞게 설정
     image: "/home-scratch-card.svg",
     finishPercent: 50,
-    onComplete: () => console.log("Completed!"),
+    onComplete: handleScratchComplete,
   };
 
   console.log(todayAdvice);
@@ -126,14 +173,22 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
           >
             {width > 0 && (
-              <ScratchCard {...settings}>
-                <div
-                  className="w- full h-full rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center"
-                  style={{}}
-                >
-                  <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
-                </div>
-              </ScratchCard>
+              <>
+                {isScratched ? (
+                  <div
+                    className="w-full h-[160px] rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center"
+                    aria-label="오늘의 조언"
+                  >
+                    <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
+                  </div>
+                ) : (
+                  <ScratchCard {...settings}>
+                    <div className="w-full h-full rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center">
+                      <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
+                    </div>
+                  </ScratchCard>
+                )}
+              </>
             )}
           </motion.div>
           {/* 팁 */}
@@ -141,16 +196,6 @@ export default function HomePage() {
             <span className="font-extrabold text-[#FFFBC0]">TIP</span>&nbsp;&nbsp;&nbsp;처음 선택한 가치관과 기준은 내 정보에서 수정 가능해요!
           </div>
         </div>
-
-        {/* 채팅 바로가기 */}
-        {/* <div className="w-full flex justify-between items-center gap-5 p-4 mx-auto bg-[#27272A] rounded-xl cursor-pointer" onClick={goChat}>
-          <Image src="/star.svg" width={50} height={50} alt="별 캐릭터" />
-          <div>
-            <p className="font-bold">오늘 어떤 선택이 있나요?</p>
-            <p className="text-[12px] mt-1">저와 함께 이야기해봐요!</p>
-          </div>
-          <Image src="/right-arrow.svg" width={20} height={20} alt="오른쪽 화살표" />
-        </div> */}
       </div>
       <Footer />
     </PageTransition>
