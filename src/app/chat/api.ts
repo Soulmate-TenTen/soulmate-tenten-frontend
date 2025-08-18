@@ -24,6 +24,11 @@ export async function getReport(roadId: number=3) {
   return response.data;
 }
 
+export async function createReport(memberId: number) {
+    const response = await http.post(`/api/chatting/createReport?memberId=${memberId}`);
+    return response.data;
+}
+
 export async function saveReport(roadId: number, result: string) {
     const response = await http.patch(`/api/road/saveRoad`, {
         id: roadId,

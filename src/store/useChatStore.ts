@@ -14,6 +14,7 @@ interface ChatStore {
   setMessages: (messages: ChatMessage[]) => void;
   addMessage: (message: ChatMessage) => void;
   updateLastMessage: (content: string) => void;
+  removeLastMessage: () => void;
   setIsLoading: (loading: boolean) => void;
   setRoadId: (roadId: number) => void;
   resetStore: () => void;
@@ -54,6 +55,13 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     });
     
     return { messages: newMessages };
+  }),
+  
+  removeLastMessage: () => set((state) => {
+    if (state.messages.length === 0) return state;
+    return {
+      messages: state.messages.slice(0, -1)
+    };
   }),
   
   setIsLoading: (loading) => set({ isLoading: loading }),
