@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "@/app/globals.css";
 
