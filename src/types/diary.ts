@@ -17,3 +17,9 @@ export interface RoadDetail {
   result: string;
   review: string;
 }
+
+export interface Remind {
+  title: string;
+  remindYn: "Y" | "N";
+  roadId: number;
+}
