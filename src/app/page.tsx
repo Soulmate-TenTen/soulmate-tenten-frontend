@@ -36,8 +36,8 @@ export default function HomePage() {
     return next.getTime() - now.getTime();
   };
 
-  const goChat = () => {
-    router.push(`/chat/${remind?.roadId}`);
+  const goDiary = () => {
+    router.push(`/diary/${remind?.roadId}`);
   };
 
   function getMiddle(text: string) {
@@ -144,7 +144,7 @@ export default function HomePage() {
               <div className="flex gap-8 items-center">
                 <div>고민했어요.</div>
                 <span>
-                  <Image src="home-right-arrow.svg" width={24} height={24} alt="채팅 바로가기" onClick={goChat} />
+                  <Image className="cursor-pointer" src="home-right-arrow.svg" width={24} height={24} alt="보고서 바로가기" onClick={goDiary} />
                 </span>
               </div>
             </motion.div>
