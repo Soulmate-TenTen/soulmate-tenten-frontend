@@ -18,7 +18,8 @@ export default function HomePage() {
   const [width, setWidth] = useState(0);
   const [isScratched, setIsScratched] = useState(false);
   const { data: todayAdvice } = useGetTodayAdvice({ memberId: Number(session?.user.id) });
-  const { data: remind } = useGetRemind({ memberId: Number(session?.user.id) });
+  const { data } = useGetRemind({ memberId: Number(session?.user.id) });
+  const remind = getMiddle(data?.title || "");
 
   const getTodayKey = () => {
     const d = new Date();
@@ -37,7 +38,11 @@ export default function HomePage() {
   };
 
   const goDiary = () => {
-    router.push(`/diary/${remind?.roadId}`);
+    if (data && !remind.includes("null")) {
+      router.push(`/diary/${data.roadId}`);
+    } else {
+      router.push("/chat");
+    }
   };
 
   function getMiddle(text: string) {
@@ -139,7 +144,7 @@ export default function HomePage() {
             >
               {session?.user.name}님,
               <br />
-              {getMiddle(remind?.title || "")}
+              {remind.replace("null", "")}
               <br />
               <div className="flex gap-8 items-center">
                 <div>고민했어요.</div>
