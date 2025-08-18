@@ -18,7 +18,8 @@ export default function HomePage() {
   const [width, setWidth] = useState(0);
   const [isScratched, setIsScratched] = useState(false);
   const { data: todayAdvice } = useGetTodayAdvice({ memberId: Number(session?.user.id) });
-  const { data: remind } = useGetRemind({ memberId: Number(session?.user.id) });
+  const { data } = useGetRemind({ memberId: Number(session?.user.id) });
+  const remind = getMiddle(data?.title || "");
 
   const getTodayKey = () => {
     const d = new Date();
@@ -37,7 +38,11 @@ export default function HomePage() {
   };
 
   const goDiary = () => {
-    router.push(`/diary/${remind?.roadId}`);
+    if (data && !remind.includes("null")) {
+      router.push(`/diary/${data.roadId}`);
+    } else {
+      router.push("/chat");
+    }
   };
 
   function getMiddle(text: string) {
@@ -108,13 +113,16 @@ export default function HomePage() {
         `}
       </style>
 
-      <div className="px-6 mt-8 flex-1 flex flex-col justify-between my-5">
+      <div className="px-6 mt-8 flex-1 flex flex-col my-5">
         {/* 로고 */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
           <Image src="/logo.svg" width={80} height={10} alt="로고" />
         </motion.div>
 
-        <div className="flex flex-col gap-3.5 mt-11">
+        {/* 공백 */}
+        <div className="flex-1 basis-0 min-h-0 max-h-[44px]" />
+
+        <div className="flex flex-col gap-3.5">
           {/* 그라데이션 텍스트 */}
           <motion.div
             className="font-semibold text-[14px] leading-[140%] bg-clip-text text-transparent"
@@ -139,7 +147,7 @@ export default function HomePage() {
             >
               {session?.user.name}님,
               <br />
-              {getMiddle(remind?.title || "")}
+              {remind.replace("null", "")}
               <br />
               <div className="flex gap-8 items-center">
                 <div>고민했어요.</div>
@@ -159,7 +167,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="mt-11">
+        {/* 공백 */}
+        <div className="flex-1 basis-0 min-h-0 max-h-[44px]" />
+
+        <div>
           {/* 복권 텍스트 */}
           <motion.div
             className="text-[18px] font-bold mb-6"
