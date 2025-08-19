@@ -195,12 +195,12 @@ export default function HomePage() {
                     className="w-full h-[160px] rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center"
                     aria-label="오늘의 조언"
                   >
-                    <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
+                    <h1 className="text-[#000414] font-bold text-center">{TextWithBreak(todayAdvice || "")}</h1>
                   </div>
                 ) : (
                   <ScratchCard {...settings}>
                     <div className="w-full h-full rounded-xl flex items-center justify-center bg-[url('/home-scratch-bg.svg')] bg-cover bg-center">
-                      <h1 className="text-[#000414] font-bold text-center">{todayAdvice}</h1>
+                      <h1 className="text-[#000414] font-bold text-center">{TextWithBreak(todayAdvice || "")}</h1>
                     </div>
                   </ScratchCard>
                 )}
@@ -216,4 +216,22 @@ export default function HomePage() {
       <Footer />
     </PageTransition>
   );
+}
+
+function TextWithBreak(text: string) {
+  const words = text.split(" ");
+
+  if (words.length >= 8) {
+    const mid = Math.floor(words.length / 2);
+
+    return (
+      <>
+        {words.slice(0, mid).join(" ")}
+        <br />
+        {words.slice(mid).join(" ")}
+      </>
+    );
+  }
+
+  return <>{text}</>;
 }
