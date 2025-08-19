@@ -145,16 +145,33 @@ export default function HomePage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             >
-              {session?.user.name}님,
-              <br />
-              {remind.replace("null", "")}
-              <br />
-              <div className="flex gap-8 items-center">
-                <div>고민했어요.</div>
-                <span>
-                  <Image className="cursor-pointer" src="home-right-arrow.svg" width={24} height={24} alt="보고서 바로가기" onClick={goDiary} />
-                </span>
-              </div>
+              {remind ? (
+                <>
+                  {session?.user.name}님,
+                  <br />
+                  {remind.replace("null", "")}
+                  <br />
+                  <div className="flex gap-8 items-center">
+                    <div>고민했어요.</div>
+                    <span>
+                      <Image className="cursor-pointer" src="home-right-arrow.svg" width={24} height={24} alt="보고서 바로가기" onClick={goDiary} />
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  오늘은
+                  <br />
+                  어떤 선택이
+                  <br />
+                  <div className="flex gap-8 items-center">
+                    <div>있으신가요?</div>
+                    <span>
+                      <Image className="cursor-pointer" src="home-right-arrow.svg" width={24} height={24} alt="보고서 바로가기" onClick={goDiary} />
+                    </span>
+                  </div>
+                </>
+              )}
             </motion.div>
             {/* 캐릭터 */}
             <motion.div
